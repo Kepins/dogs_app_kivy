@@ -1,0 +1,6 @@
+# PyCharm specific directory
+.idea/
+
+# this file contains sensitive data
+.env
+
