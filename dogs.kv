@@ -180,5 +180,17 @@ WindowManager:
                 Rectangle:
                     pos: self.pos
                     size: self.size
-
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: 0, '20dp', 0, 0
+            spacing: '15dp'
+            size_hint: 1, None
+            height: '60dp'
+            Button:
+                text: 'Edytuj'
+            Button:
+                text: 'Anuluj'
+                on_release:
+                    app.root.current = "clientsScreen"
+                    root.manager.transition.direction = "right"
 
