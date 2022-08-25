@@ -33,38 +33,10 @@ class AddClientScreen(Screen):
 
 class EditClientScreen(Screen):
     pass
-#
-# class TestScreen(Screen):
-#     pass
+
 
 class WindowManager(ScreenManager):
     pass
-
-
-# class DTTest(ScrollView):
-#     def __init__(self, **kwargs):
-#         super().__init__(**kwargs)
-#         gridLayout = GridLayout()
-#         gridLayout.cols = 1
-#         gridLayout.size_hint = (1, None)
-#         gridLayout.bind(minimum_height=gridLayout.setter('height'))
-#         b = Button(size_hint = (1, None), height=dp(30))
-#         gridLayout.add_widget(b)
-#         b = Button(size_hint=(1, None), height=dp(30))
-#         gridLayout.add_widget(b)
-#         b = Button(size_hint=(1, None), height=dp(30))
-#         gridLayout.add_widget(b)
-#         b = Button(size_hint=(1, None), height=dp(30))
-#         gridLayout.add_widget(b)
-#         b = Button(size_hint=(1, None), height=dp(30))
-#         gridLayout.add_widget(b)
-#         b = Button(size_hint=(1, None), height=dp(30))
-#         gridLayout.add_widget(b)
-#         b = Button(size_hint=(1, None), height=dp(30), text='last')
-#         gridLayout.add_widget(b)
-#
-#
-#         self.add_widget(gridLayout)
 
 
 class ClientsDataTable(BoxLayout):
@@ -99,12 +71,9 @@ class ClientsDataTable(BoxLayout):
         self.add_widget(scrollView)
 
 
-
-
-
-
 class DogsApp(App):
     pass
+
 
 if __name__ == '__main__':
     DogsApp().run()
