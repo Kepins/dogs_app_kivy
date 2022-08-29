@@ -8,6 +8,7 @@ if TYPE_CHECKING:
 @dataclass
 class Owner:
     id: int
+    phone: str
     first_name: str
     last_name: str
     note: str

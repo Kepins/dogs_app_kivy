@@ -49,7 +49,7 @@ class Model:
         cursor.execute(query)
         tuples = cursor.fetchall()
         for t in tuples:
-            owner = Owner(id=t[0], first_name=t[1], last_name=t[2], note=t[3], dogs=[])
+            owner = Owner(id=t[0], phone=t[1], first_name=t[2], last_name=t[3], note=t[4], dogs=[])
             self.owners.append(owner)
 
     def __load_sizes(self):
