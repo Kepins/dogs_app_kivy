@@ -4,3 +4,5 @@
 # this file contains sensitive data
 .env
 
+# __pycache__ files
+entities/__pycache__/

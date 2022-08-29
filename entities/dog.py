@@ -1,5 +1,5 @@
 from __future__ import annotations
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
@@ -17,4 +17,4 @@ class Dog:
     breed: Breed
     size: Size
     note: str
-    appointments: [Appointment]
+    appointments: [Appointment] = field(repr=False)
