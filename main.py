@@ -32,8 +32,9 @@ class AddClientScreen(Screen):
         phone_number = self.ids.txt_input_phone_number.text
         first_name = self.ids.txt_input_first_name.text
         last_name = self.ids.txt_input_last_name.text
+        note = self.ids.txt_input_note.text
 
-        print('phone: {}\nfirst name: {}\nlast name: {}'.format(phone_number, first_name, last_name))
+        print('phone: {}\nfirst name: {}\nlast name: {}\nnote: {}'.format(phone_number, first_name, last_name, note))
 
 
 class EditSelectClientScreen(Screen):
@@ -69,6 +70,7 @@ class EditClientScreen(Screen):
         input_phone_number = self.ids['txt_input_phone_number']
         input_first_name = self.ids['txt_input_first_name']
         input_last_name = self.ids['txt_input_last_name']
+        input_note = self.ids['txt_input_note']
 
         input_phone_number.text = owner.phone
         input_phone_number.disabled = True
@@ -80,13 +82,19 @@ class EditClientScreen(Screen):
             input_last_name.text = owner.last_name
         else:
             input_last_name.text = ''
+        if owner.note is not None:
+            input_note.text = owner.note
+        else:
+            input_note.text = ''
 
     def on_save_button_click(self):
         input_first_name = self.ids['txt_input_first_name']
         input_last_name = self.ids['txt_input_last_name']
+        input_note = self.ids['txt_input_note']
         first_name = input_first_name.text
         last_name = input_last_name.text
-        print(first_name, last_name)
+        note = input_note.text
+        print(first_name, last_name, note)
 
 
 class EditSelectDogScreen(Screen):
@@ -134,8 +142,8 @@ class ClientsDataTable(BoxLayout):
     gridLayout_rows: GridLayout
 
     height_row = dp(30)
-    columns = ['telefon', 'imię', 'nazwisko']
-    column_widths = (1/3, 1/3, 1/3)
+    columns = ['telefon', 'imię', 'nazwisko', 'notka']
+    column_widths = (4/18, 4/18, 4/18, 6/18)
     bg_color = ListProperty([220/255, 220/255, 220/255, 1])
     selected_color = ListProperty([0, 220/255, 220/255, 1])
 
@@ -180,7 +188,7 @@ class ClientsDataTable(BoxLayout):
                                      height=self.height_row)
             row.owner = owner
             row.bind(on_press=self.on_row_select)
-            values = (owner.phone, owner.first_name, owner.last_name)
+            values = (owner.phone, owner.first_name, owner.last_name, owner.note)
             for value, width in zip(values, self.column_widths):
                 label = Label(size_hint=(width, 1))
                 if value is not None:

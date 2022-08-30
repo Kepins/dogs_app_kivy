@@ -35,7 +35,7 @@ WindowManager:
 
 <LineTextInput@TextInput>
     multiline: False
-    font_size: '25dp'
+    font_size: '20dp'
     # halign: "center"
 
 <WelcomeScreen>:
@@ -117,6 +117,13 @@ WindowManager:
                 color: (0,0,0,1)
             LineTextInput:
                 id: txt_input_last_name
+            Label:
+                text: 'notka: '
+                size_hint: None, 1
+                width: '80dp'
+                color: (0,0,0,1)
+            LineTextInput:
+                id: txt_input_note
         BoxLayout:
             orientation: 'horizontal'
             padding: 0, '20dp', 0, 0
@@ -245,6 +252,13 @@ WindowManager:
                 color: (0,0,0,1)
             LineTextInput:
                 id: txt_input_last_name
+            Label:
+                text: 'notka: '
+                size_hint: None, 1
+                width: '80dp'
+                color: (0,0,0,1)
+            LineTextInput:
+                id: txt_input_note
         Button:
             size_hint: 1, None
             height: '40dp'
