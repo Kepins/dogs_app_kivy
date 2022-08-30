@@ -10,7 +10,7 @@ WindowManager:
     WelcomeScreen:
     ClientsScreen:
     AddClientScreen:
-    EditClientScreen
+    EditSelectClientScreen
 
 <DefaultLayout@BoxLayout>:
     padding: '50dp', '50dp', '50dp', '20dp'
@@ -70,7 +70,7 @@ WindowManager:
         MyButton:
             text: 'Edytuj'
             on_release:
-                app.root.current = "editClientScreen"
+                app.root.current = "editSelectClientScreen"
                 root.manager.transition.direction = "left"
         MyButton:
             text: 'Wróć'
@@ -144,8 +144,8 @@ WindowManager:
         color: (1, 1, 1, 1)
         pos_hint: {"y": 0}
 
-<EditClientScreen>:
-    name: "editClientScreen"
+<EditSelectClientScreen>:
+    name: "editSelectClientScreen"
     DefaultLayout:
         TitleLabel:
             text: 'Edytowanie klienta'
@@ -162,19 +162,32 @@ WindowManager:
                 text: 'tel.'
                 color: (0,0,0,1)
             LineTextInput:
+                id: txt_input_phone_number
                 font_size: '15dp'
+                on_text:
+                    root.phone_number = self.text
+                    root.update_data()
             Label:
                 text: 'imię'
                 color: (0,0,0,1)
             LineTextInput:
+                id: txt_input_first_name
                 font_size: '15dp'
+                on_text:
+                    root.first_name = self.text
+                    root.update_data()
             Label:
                 text: 'nazwisko'
                 color: (0,0,0,1)
             LineTextInput:
+                id: txt_input_last_name
                 font_size: '15dp'
+                on_text:
+                    root.last_name = self.text
+                    root.update_data()
         ClientsDataTable:
-
+            root: root
+            id: clientsDataTable
         BoxLayout:
             orientation: 'horizontal'
             padding: 0, '20dp', 0, 0
@@ -182,7 +195,10 @@ WindowManager:
             size_hint: 1, None
             height: '60dp'
             Button:
+                id: button_edit
                 text: 'Edytuj'
+                disabled:
+                    not root.is_row_selected
             Button:
                 text: 'Anuluj'
                 on_release:

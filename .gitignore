@@ -5,4 +5,5 @@
 .env
 
 # __pycache__ files
+__pycache__/
 entities/__pycache__/
