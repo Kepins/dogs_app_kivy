@@ -15,6 +15,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 from controller import Controller
+from entities.owner import Owner
 
 
 # Define different screens
@@ -40,6 +41,7 @@ class EditSelectClientScreen(Screen):
     first_name: str
     last_name: str
     is_row_selected = BooleanProperty(False)
+    owner_selected: Owner
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -50,6 +52,38 @@ class EditSelectClientScreen(Screen):
     def update_data(self):
         self.ids['clientsDataTable'].update_data_rows(str(self.phone_number), str(self.first_name), str(self.last_name))
 
+
+class EditClientScreen(Screen):
+    owner_edited: Owner
+
+    def on_pre_enter(self, *args):
+        owner = app.root.get_screen('editSelectClientScreen').owner_selected
+        self.owner_edited = owner
+        input_phone_number = self.ids['txt_input_phone_number']
+        input_first_name = self.ids['txt_input_first_name']
+        input_last_name = self.ids['txt_input_last_name']
+
+        input_phone_number.text = owner.phone
+        input_phone_number.disabled = True
+        if owner.first_name is not None:
+            input_first_name.text = owner.first_name
+        else:
+            input_first_name.text = ''
+        if owner.last_name is not None:
+            input_last_name.text = owner.last_name
+        else:
+            input_last_name.text = ''
+
+    def on_save_button_click(self):
+        input_first_name = self.ids['txt_input_first_name']
+        input_last_name = self.ids['txt_input_last_name']
+        first_name = input_first_name.text
+        last_name = input_last_name.text
+        print(first_name, last_name)
+
+
+class EditSelectDogScreen(Screen):
+    pass
 
 class WindowManager(ScreenManager):
     pass
@@ -79,7 +113,6 @@ class ClickableBoxLayout(ButtonBehavior, BoxLayout):
 
 class ClientsDataTable(BoxLayout):
     row_selected = None
-    data_rows: [ClickableBoxLayout]
     gridLayout_rows: GridLayout
 
     height_row = dp(30)
@@ -119,14 +152,15 @@ class ClientsDataTable(BoxLayout):
     def update_data_rows(self, phone='', first_name='', last_name=''):
         if hasattr(self, 'root'):
             self.root.is_row_selected = False
+            self.root.owner_selected = None
         self.row_selected = None
-        self.data_rows = []
         gridLayout = self.gridLayout_rows
         gridLayout.clear_widgets()
         owners = DogsApp.controller.get_owners(phone=phone, first_name=first_name, last_name=last_name)
         for owner in owners:
             row = ClickableBoxLayout(bg_color=self.bg_color, orientation='horizontal', size_hint=(1, None),
                                      height=self.height_row)
+            row.owner = owner
             row.bind(on_press=self.on_row_select)
             values = (owner.phone, owner.first_name, owner.last_name)
             for value, width in zip(values, self.column_widths):
@@ -136,12 +170,12 @@ class ClientsDataTable(BoxLayout):
                 else:
                     label.text = ''
                 row.add_widget(label)
-            self.data_rows.append(row)
             gridLayout.add_widget(row)
 
     def on_row_select(self, row):
         if hasattr(self, 'root'):
             self.root.is_row_selected = True
+            self.root.owner_selected = row.owner
         if self.row_selected:
             self.row_selected.change_color(self.bg_color)
         self.row_selected = row
@@ -153,4 +187,5 @@ class DogsApp(App):
 
 
 if __name__ == '__main__':
-    DogsApp().run()
+    app = DogsApp()
+    app.run()

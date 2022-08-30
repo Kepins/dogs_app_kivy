@@ -1,3 +1,4 @@
+from entities.owner import Owner
 from model import Model
 
 
@@ -15,3 +16,6 @@ class Controller:
         if last_name != '':
             owners = filter(lambda o: o.last_name is not None and o.last_name.startswith(last_name), owners)
         return list(owners)
+
+    def update_owner(self, owner: Owner):
+        pass
