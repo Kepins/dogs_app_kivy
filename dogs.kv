@@ -13,6 +13,7 @@ WindowManager:
     EditSelectClientScreen
     EditClientScreen
     EditSelectDogScreen
+    EditDogScreen
 
 <DefaultLayout@BoxLayout>:
     padding: '50dp', '50dp', '50dp', '20dp'
@@ -272,3 +273,32 @@ WindowManager:
 
 <EditSelectDogScreen>
     name: "editSelectDogScreen"
+    DefaultLayout:
+        TitleLabel:
+            text: 'Edytowanie psów'
+        DogsDataTable:
+            root: root
+            id: dogsDataTable
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: 0, '20dp', 0, 0
+            spacing: '15dp'
+            size_hint: 1, None
+            height: '60dp'
+            Button:
+                id: button_edit
+                text: 'Edytuj'
+                disabled:
+                    not root.is_row_selected
+                on_release:
+                    print(root.dog_selected)
+                    app.root.current = "editDogScreen"
+                    root.manager.transition.direction = "left"
+            Button:
+                text: 'Anuluj'
+                on_release:
+                    app.root.current = "editClientScreen"
+                    root.manager.transition.direction = "right"
+
+<EditDogScreen>
+    name: "editDogScreen"
