@@ -45,9 +45,16 @@ class EditSelectClientScreen(Screen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    def on_pre_enter(self, *args):
+        # reset to default statre
         self.phone_number = ''
         self.first_name = ''
         self.last_name = ''
+        self.ids['txt_input_phone_number'].text = ''
+        self.ids['txt_input_first_name'].text = ''
+        self.ids['txt_input_last_name'].text = ''
+        self.ids['clientsDataTable'].update_data_rows()
 
     def update_data(self):
         self.ids['clientsDataTable'].update_data_rows(str(self.phone_number), str(self.first_name), str(self.last_name))
@@ -89,7 +96,7 @@ class WindowManager(ScreenManager):
     pass
 
 
-# should be used in ClientsDataTable
+# should be used in ClientsDataTable, DogsDataTable
 class ClickableBoxLayout(ButtonBehavior, BoxLayout):
     def __init__(self, bg_color, **kwargs):
         # make sure we aren't overriding any important functionality
@@ -142,7 +149,6 @@ class ClientsDataTable(BoxLayout):
         gridLayout.bind(minimum_height=gridLayout.setter('height'))
         scrollView.add_widget(gridLayout)
         self.gridLayout_rows = gridLayout
-        self.update_data_rows()
         self.add_widget(scrollView)
 
     def _update_rect(self, instance, value):
@@ -150,9 +156,10 @@ class ClientsDataTable(BoxLayout):
         self.rect.size = instance.size
 
     def update_data_rows(self, phone='', first_name='', last_name=''):
-        if hasattr(self, 'root'):
-            self.root.is_row_selected = False
-            self.root.owner_selected = None
+        # update root
+        self.root.is_row_selected = False
+        self.root.owner_selected = None
+
         self.row_selected = None
         gridLayout = self.gridLayout_rows
         gridLayout.clear_widgets()
@@ -173,9 +180,10 @@ class ClientsDataTable(BoxLayout):
             gridLayout.add_widget(row)
 
     def on_row_select(self, row):
-        if hasattr(self, 'root'):
-            self.root.is_row_selected = True
-            self.root.owner_selected = row.owner
+        # update root
+        self.root.is_row_selected = True
+        self.root.owner_selected = row.owner
+
         if self.row_selected:
             self.row_selected.change_color(self.bg_color)
         self.row_selected = row
