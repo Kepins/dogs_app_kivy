@@ -11,10 +11,14 @@ from kivy.uix.recycleview import RecycleView
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.widget import Widget
 from kivy.lang import Builder
+from kivy.uix.dropdown import DropDown
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 from controller import Controller
+# entities
+from entities.breed import Breed
+from entities.dog import Dog
 from entities.owner import Owner
 
 
@@ -109,10 +113,83 @@ class EditSelectDogScreen(Screen):
 
 
 class EditDogScreen(Screen):
-    pass
+    dog: Dog
+
+    def on_pre_enter(self, *args):
+        dog = app.root.get_screen('editSelectDogScreen').dog_selected
+        self.dog = dog
+        input_name = self.ids['txt_input_name']
+        input_note = self.ids['txt_input_note']
+        if dog.name is not None:
+            input_name.text = self.dog.name
+        else:
+            input_name.text = ''
+        if dog.note is not None:
+            input_note.text = dog.note
+        else:
+            input_note.text = ''
+
+        breeds = app.controller.get_breeds()
+
+        sizes = app.controller.get_sizes()
+
+        # breed dropdown
+        button_breed = self.ids['button_breed_dropdown']
+        button_breed.breed = dog.breed
+        button_breed.text = dog.breed.name
+        breeds_dropdown = DropDown()
+        for breed in breeds:
+            btn = ButtonWithBreed()
+            btn.breed = breed
+            btn.text = breed.name
+            btn.size_hint = (1, None)
+            btn.height = dp(30)
+            btn.background_normal = ''
+            btn.background_color = (220/255, 220/255, 220/255, 1)
+            btn.bind(on_release=lambda btn: breeds_dropdown.select(btn.breed))
+            breeds_dropdown.add_widget(btn)
+
+        button_breed.bind(on_release=breeds_dropdown.open)
+        breeds_dropdown.bind(on_select=lambda instance, breed: (setattr(button_breed, 'breed', breed), setattr(button_breed, 'text', breed.name)))
+
+        # size dropdown
+        button_size = self.ids['button_size_dropdown']
+        button_size.my_size = dog.size
+        button_size.text = dog.size.name
+        sizes_dropdown = DropDown()
+        for size in sizes:
+            btn = ButtonWithSize()
+            btn.my_size = size
+            btn.text = size.name
+            btn.size_hint = (1, None)
+            btn.height = dp(30)
+            btn.background_normal = ''
+            btn.background_color = (220 / 255, 220 / 255, 220 / 255, 1)
+            btn.bind(on_release=lambda btn: sizes_dropdown.select(btn.my_size))
+            sizes_dropdown.add_widget(btn)
+
+        button_size.bind(on_release=sizes_dropdown.open)
+        sizes_dropdown.bind(on_select=lambda instance, my_size: (setattr(button_size, 'my_size', my_size), setattr(button_size, 'text', my_size.name)))
+
+    def on_save_button_click(self):
+        input_name = self.ids['txt_input_name']
+        input_note = self.ids['txt_input_note']
+        name = input_name.text
+        note = input_note.text
+        print(name, note)
 
 class WindowManager(ScreenManager):
     pass
+
+
+# should be used in dropdown
+class ButtonWithBreed(Button):
+    breed = None
+
+
+# should be used in dropdown
+class ButtonWithSize(Button):
+    my_size = None
 
 
 # should be used in ClientsDataTable, DogsDataTable

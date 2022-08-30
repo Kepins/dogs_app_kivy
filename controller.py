@@ -17,5 +17,15 @@ class Controller:
             owners = filter(lambda o: o.last_name is not None and o.last_name.startswith(last_name), owners)
         return list(owners)
 
+    def get_breeds(self):
+        breeds = self.model.breeds
+        return breeds
+
+    def get_sizes(self):
+        sizes = self.model.sizes
+        # temporary solution
+        sizes_sorted = sorted(sizes, key=lambda s: s.id)
+        return sizes_sorted
+
     def update_owner(self, owner: Owner):
         pass
