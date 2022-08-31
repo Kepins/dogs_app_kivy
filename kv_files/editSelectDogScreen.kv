@@ -1,0 +1,32 @@
+<EditSelectDogScreen>
+    name: "editSelectDogScreen"
+    DefaultLayout:
+        TitleLabel:
+            text: 'Edytowanie psów'
+        DogsDataTable:
+            root: root
+            id: dogsDataTable
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: 0, '20dp', 0, 0
+            spacing: '15dp'
+            size_hint: 1, None
+            height: '60dp'
+            Button:
+                text: 'Dodaj'
+                on_release:
+                    app.root.current = "addDogScreen"
+                    root.manager.transition.direction = "left"
+            Button:
+                id: button_edit
+                text: 'Edytuj'
+                disabled:
+                    not root.is_row_selected
+                on_release:
+                    app.root.current = "editDogScreen"
+                    root.manager.transition.direction = "left"
+            Button:
+                text: 'Anuluj'
+                on_release:
+                    app.root.current = "editClientScreen"
+                    root.manager.transition.direction = "right"

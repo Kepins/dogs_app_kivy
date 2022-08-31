@@ -1,0 +1,21 @@
+<WelcomeScreen>:
+    name: "welcomeScreen"
+
+    DefaultLayout:
+        TitleLabel:
+            text: 'Aplikacja'
+        MyButton:
+            text: 'Kalendarz'
+        MyButton:
+            text: 'Klienci'
+            on_release:
+                app.root.current = "clientsScreen"
+                root.manager.transition.direction = "left"
+        MyButton:
+            text: 'Raport'
+        MyButton:
+            text: 'Wyjdź'
+            on_release:
+                app.stop()
+        # this widget is used to align buttons to the top of the screen
+        Widget:
