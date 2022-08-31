@@ -13,6 +13,7 @@ WindowManager:
     EditSelectClientScreen
     EditClientScreen
     EditSelectDogScreen
+    AddDogScreen
     EditDogScreen
 
 <DefaultLayout@BoxLayout>:
@@ -300,12 +301,16 @@ WindowManager:
             size_hint: 1, None
             height: '60dp'
             Button:
+                text: 'Dodaj'
+                on_release:
+                    app.root.current = "addDogScreen"
+                    root.manager.transition.direction = "left"
+            Button:
                 id: button_edit
                 text: 'Edytuj'
                 disabled:
                     not root.is_row_selected
                 on_release:
-                    print(root.dog_selected)
                     app.root.current = "editDogScreen"
                     root.manager.transition.direction = "left"
             Button:
@@ -313,6 +318,69 @@ WindowManager:
                 on_release:
                     app.root.current = "editClientScreen"
                     root.manager.transition.direction = "right"
+
+<AddDogScreen>
+    name: "addDogScreen"
+    DefaultLayout:
+        TitleLabel:
+            text: 'Dodawanie psa'
+        GridLayout:
+            cols: 2
+            row_default_height: '40dp'
+            row_force_default: True
+            spacing: 0, '30dp'
+            size_hint: 1, None
+            height: self.minimum_height
+            pos_hint: { "center_x": 0.5}
+            Label:
+                text: 'imię: '
+                size_hint: None, 1
+                width: '80dp'
+                color: (0,0,0,1)
+            LineTextInput:
+                id: txt_input_name
+            Label:
+                text: 'rasa: '
+                size_hint: None, 1
+                width: '80dp'
+                color: (0,0,0,1)
+            ButtonWithBreed:
+                id: button_breed_dropdown
+                background_normal: ''
+                background_color: (200/255, 200/255, 200/255, 1)
+            Label:
+                text: 'wielkość: '
+                size_hint: None, 1
+                width: '80dp'
+                color: (0,0,0,1)
+            Button:
+                id: button_size_dropdown
+                background_normal: ''
+                background_color: (200/255, 200/255, 200/255, 1)
+            Label:
+                text: 'notka: '
+                size_hint: None, 1
+                width: '80dp'
+                color: (0,0,0,1)
+            LineTextInput:
+                id: txt_input_note
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: 0, '20dp', 0, 0
+            spacing: '15dp'
+            size_hint: 1, None
+            height: '60dp'
+            Button:
+                text: 'Dodaj'
+                on_release:
+                    root.on_add_button_click()
+            Button:
+                text: 'Anuluj'
+                on_release:
+                    app.root.current = "editSelectDogScreen"
+                    root.manager.transition.direction = "right"
+        # this widget is used to align buttons to the top of the screen
+        Widget:
 
 <EditDogScreen>
     name: "editDogScreen"
