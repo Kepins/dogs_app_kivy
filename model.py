@@ -133,4 +133,17 @@ class Model:
             service.appointments.append(appointment)
             self.appointments.append(appointment)
 
+    @staticmethod
+    def convert_empty_string(string):
+        if string == '':
+            return None
+        else:
+            return string
 
+    def insert_owner(self, owner):
+        cursor = self.db.cursor()
+        query = "INSERT INTO Owner(phone, first_name, last_name, note) VALUES(%s, %s, %s, %s)"
+        values = (owner.phone, owner.first_name, owner.last_name, owner.note)
+        values = [self.convert_empty_string(value) for value in values]
+        cursor.execute(query, values)
+        self.db.commit()

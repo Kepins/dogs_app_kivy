@@ -27,5 +27,8 @@ class Controller:
         sizes_sorted = sorted(sizes, key=lambda s: s.id)
         return sizes_sorted
 
+    def add_owner(self, owner: Owner):
+        self.model.insert_owner(owner)
+
     def update_owner(self, owner: Owner):
         pass
