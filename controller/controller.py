@@ -1,5 +1,8 @@
+from mysql.connector import Error
+
 from entities.owner import Owner
-from model import Model
+from controller.errors import InsertOwnerError
+from model.model import Model
 
 
 class Controller:
@@ -28,7 +31,10 @@ class Controller:
         return sizes_sorted
 
     def add_owner(self, owner: Owner):
-        self.model.insert_owner(owner)
+        try:
+            self.model.insert_owner(owner)
+        except Error as err:
+            raise InsertOwnerError(err)
 
     def update_owner(self, owner: Owner):
         pass

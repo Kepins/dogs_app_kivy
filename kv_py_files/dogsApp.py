@@ -1,7 +1,7 @@
 from kivy.app import App
 from kivy.lang import Builder
 
-from controller import Controller
+from controller.controller import Controller
 
 
 class DogsApp(App):

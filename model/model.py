@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 import mysql.connector
-from mysql.connector import MySQLConnection
+from mysql.connector import MySQLConnection, Error
 
 from entities.appointment import Appointment
 from entities.breed import Breed
@@ -145,5 +145,8 @@ class Model:
         query = "INSERT INTO Owner(phone, first_name, last_name, note) VALUES(%s, %s, %s, %s)"
         values = (owner.phone, owner.first_name, owner.last_name, owner.note)
         values = [self.convert_empty_string(value) for value in values]
-        cursor.execute(query, values)
-        self.db.commit()
+        try:
+            cursor.execute(query, values)
+            self.db.commit()
+        except Error as err:
+            raise err
