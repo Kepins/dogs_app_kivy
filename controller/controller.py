@@ -1,7 +1,8 @@
 from mysql.connector import Error
 
+from entities.dog import Dog
 from entities.owner import Owner
-from controller.errors import InsertOwnerError
+from controller.errors import InsertOwnerError, InsertDogError
 from model.model import Model
 
 
@@ -35,6 +36,12 @@ class Controller:
             self.model.insert_owner(owner)
         except Error as err:
             raise InsertOwnerError(err)
+
+    def add_dog(self, dog: Dog):
+        try:
+            self.model.insert_dog(dog)
+        except Error as err:
+            raise InsertDogError(err)
 
     def update_owner(self, owner: Owner):
         pass

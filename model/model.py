@@ -153,3 +153,18 @@ class Model:
         except Error as err:
             raise err
 
+    def insert_dog(self, dog):
+        cursor = self.db.cursor()
+        query = "INSERT INTO Dog(name, id_owner, id_breed, id_size, note) VALUES(%s, %s, %s, %s, %s)"
+        values = (dog.name, dog.owner.id, dog.breed.id, dog.size.id, dog.note)
+        values = [self.convert_empty_string(value) for value in values]
+        try:
+            cursor.execute(query, values)
+            dog.id = cursor.lastrowid
+            self.db.commit()
+            self.dogs.append(dog)
+            dog.owner.dogs.append(dog)
+            dog.breed.dogs.append(dog)
+            dog.size.dogs.append(dog)
+        except Error as err:
+            raise err
