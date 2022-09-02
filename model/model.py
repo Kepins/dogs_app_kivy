@@ -168,3 +168,27 @@ class Model:
             dog.size.dogs.append(dog)
         except Error as err:
             raise err
+
+    # dog parameter HAS TO be a new instance of Dog class and not changed existing instance
+    def update_dog(self, dog):
+        cursor = self.db.cursor()
+        query = "UPDATE Dog SET name = %s, id_breed = %s, id_size = %s, note = %s WHERE id = %s"
+        values = (dog.name, dog.breed.id, dog.size.id, dog.note, dog.id)
+        values = [self.convert_empty_string(value) for value in values]
+        try:
+            cursor.execute(query, values)
+            self.db.commit()
+
+            existing_dog = next(filter(lambda d: d.id == dog.id, self.dogs))
+            existing_dog.breed.dogs.remove(existing_dog)
+            existing_dog.size.dogs.remove(existing_dog)
+
+            existing_dog.name = dog.name
+            existing_dog.breed = dog.breed
+            existing_dog.size = dog.size
+            existing_dog.note = dog.note
+            existing_dog.breed.dogs.append(existing_dog)
+            existing_dog.size.dogs.append(existing_dog)
+
+        except Error as err:
+            raise err

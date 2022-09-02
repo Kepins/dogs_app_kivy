@@ -2,6 +2,7 @@ from kivy.metrics import dp
 from kivy.uix.dropdown import DropDown
 from kivy.uix.screenmanager import Screen
 
+from controller.errors import EditDogError
 from entities.dog import Dog
 from kv_py_files.dogsApp import app
 from kv_py_files.shared_elements.buttonWithBreed import ButtonWithBreed
@@ -79,6 +80,9 @@ class EditDogScreen(Screen):
             self.sizes_dropdown.bind(on_select=lambda instance, my_size: (
             setattr(button_size, 'my_size', my_size), setattr(button_size, 'text', my_size.name)))
 
+        # reset to default
+        self.ids['status_label'].reset_to_default()
+
     def on_save_button_click(self):
         input_name = self.ids['txt_input_name']
         breed = self.ids['button_breed_dropdown'].breed
@@ -86,4 +90,12 @@ class EditDogScreen(Screen):
         input_note = self.ids['txt_input_note']
         name = input_name.text
         note = input_note.text
-        print(name, breed, size, note)
+        edited_dog = Dog(id=self.dog.id, owner=self.dog.owner, name=name, breed=breed, size=size, note=note, appointments=self.dog.appointments)
+        try:
+            self.ids['status_label'].text = 'Edytowanie...'
+            app.controller.edit_dog(edited_dog)
+            self.ids['status_label'].text = 'Edytowano'
+        except EditDogError as err:
+            self.ids['status_label'].text = err.msg
+        self.ids['status_label'].change_color((191 / 255, 64 / 255, 191 / 255, 1))
+        print(self.dog)

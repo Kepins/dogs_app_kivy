@@ -29,3 +29,15 @@ class InsertDogError(Exception):
             self.msg = 'Jedno z pól ma za dużo znaków'
         else:
             self.msg = 'Błąd: ' + sql_error.msg
+
+
+class EditDogError(Exception):
+    sql_error: MySQLError
+    msg: str
+
+    def __init__(self, sql_error: MySQLError):
+        self.sql_error = sql_error
+        if sql_error.errno == 1406:
+            self.msg = 'Jedno z pól ma za dużo znaków'
+        else:
+            self.msg = 'Błąd: ' + sql_error.msg
