@@ -169,6 +169,24 @@ class Model:
         except Error as err:
             raise err
 
+    # owner parameter HAS TO be a new instance of Owner class and not changed existing instance
+    def update_owner(self, owner):
+        cursor = self.db.cursor()
+        query = "UPDATE Owner SET first_name = %s, last_name = %s, note = %s WHERE id = %s"
+        values = (owner.first_name, owner.last_name, owner.note, owner.id)
+        values = [self.convert_empty_string(value) for value in values]
+        try:
+            cursor.execute(query, values)
+            self.db.commit()
+
+            existing_owner = next(filter(lambda o: o.id == owner.id, self.owners))
+            existing_owner.first_name = owner.first_name
+            existing_owner.last_name = owner.last_name
+            existing_owner.note = owner.note
+
+        except Error as err:
+            raise err
+
     # dog parameter HAS TO be a new instance of Dog class and not changed existing instance
     def update_dog(self, dog):
         cursor = self.db.cursor()

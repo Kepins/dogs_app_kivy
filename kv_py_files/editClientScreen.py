@@ -1,5 +1,6 @@
 from kivy.uix.screenmanager import Screen
 
+from controller.errors import EditOwnerError
 from entities.owner import Owner
 from kv_py_files.dogsApp import app
 
@@ -37,4 +38,11 @@ class EditClientScreen(Screen):
         first_name = input_first_name.text
         last_name = input_last_name.text
         note = input_note.text
-        print(first_name, last_name, note)
+        edited_owner = Owner(id=self.owner_edited.id, phone=self.owner_edited.phone, first_name=first_name, last_name=last_name, note=note, dogs=self.owner_edited.dogs)
+        try:
+            self.ids['status_label'].text = 'Edytowanie...'
+            app.controller.edit_owner(edited_owner)
+            self.ids['status_label'].text = 'Edytowano'
+        except EditOwnerError as err:
+            self.ids['status_label'].text = err.msg
+        self.ids['status_label'].change_color((191 / 255, 64 / 255, 191 / 255, 1))

@@ -98,4 +98,4 @@ class EditDogScreen(Screen):
         except EditDogError as err:
             self.ids['status_label'].text = err.msg
         self.ids['status_label'].change_color((191 / 255, 64 / 255, 191 / 255, 1))
-        print(self.dog)
+
