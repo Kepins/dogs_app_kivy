@@ -148,5 +148,7 @@ class Model:
         try:
             cursor.execute(query, values)
             self.db.commit()
+            self.owners.append(owner)
         except Error as err:
             raise err
+

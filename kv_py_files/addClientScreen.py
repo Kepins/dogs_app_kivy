@@ -23,7 +23,7 @@ class AddClientScreen(Screen):
         last_name = self.ids['txt_input_last_name'].text
         note = self.ids['txt_input_note'].text
 
-        new_owner = Owner(id=None, phone=phone_number,first_name=first_name, last_name=last_name, note=note, dogs=None)
+        new_owner = Owner(id=None, phone=phone_number,first_name=first_name, last_name=last_name, note=note, dogs=[])
         try:
             self.ids['status_label'].text = 'Dodawanie...'
             app.controller.add_owner(new_owner)
