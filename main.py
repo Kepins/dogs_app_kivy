@@ -1,4 +1,4 @@
-from kv_py_files.dogsApp import DogsApp, app
+from kv_py_files.dogsApp import app
 
 if __name__ == '__main__':
 

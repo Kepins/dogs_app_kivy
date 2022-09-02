@@ -14,12 +14,12 @@ from entities.size import Size
 class Model:
     db: MySQLConnection
 
-    owners: [Owner]
-    sizes: [Size]
-    breeds: [Breed]
-    dogs: [Dog]
-    services: [Service]
-    appointments: [Appointment]
+    owners: list[Owner]
+    sizes: list[Size]
+    breeds: list[Breed]
+    dogs: list[Dog]
+    services: list[Service]
+    appointments: list[Appointment]
 
     def __init__(self):
         # load environment variables from '.env' file
@@ -140,7 +140,7 @@ class Model:
         else:
             return string
 
-    def insert_owner(self, owner):
+    def insert_owner(self, owner: Owner):
         cursor = self.db.cursor()
         query = "INSERT INTO Owner(phone, first_name, last_name, note) VALUES(%s, %s, %s, %s)"
         values = (owner.phone, owner.first_name, owner.last_name, owner.note)
@@ -153,7 +153,7 @@ class Model:
         except Error as err:
             raise err
 
-    def insert_dog(self, dog):
+    def insert_dog(self, dog: Dog):
         cursor = self.db.cursor()
         query = "INSERT INTO Dog(name, id_owner, id_breed, id_size, note) VALUES(%s, %s, %s, %s, %s)"
         values = (dog.name, dog.owner.id, dog.breed.id, dog.size.id, dog.note)
@@ -170,7 +170,7 @@ class Model:
             raise err
 
     # owner parameter HAS TO be a new instance of Owner class and not changed existing instance
-    def update_owner(self, owner):
+    def update_owner(self, owner: Owner):
         cursor = self.db.cursor()
         query = "UPDATE Owner SET first_name = %s, last_name = %s, note = %s WHERE id = %s"
         values = (owner.first_name, owner.last_name, owner.note, owner.id)
@@ -188,7 +188,7 @@ class Model:
             raise err
 
     # dog parameter HAS TO be a new instance of Dog class and not changed existing instance
-    def update_dog(self, dog):
+    def update_dog(self, dog: Dog):
         cursor = self.db.cursor()
         query = "UPDATE Dog SET name = %s, id_breed = %s, id_size = %s, note = %s WHERE id = %s"
         values = (dog.name, dog.breed.id, dog.size.id, dog.note, dog.id)

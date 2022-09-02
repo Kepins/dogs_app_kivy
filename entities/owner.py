@@ -12,4 +12,4 @@ class Owner:
     first_name: str
     last_name: str
     note: str
-    dogs: [Dog] = field(repr=False)
+    dogs: list[Dog] = field(repr=False)

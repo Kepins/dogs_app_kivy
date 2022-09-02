@@ -12,7 +12,7 @@ class Controller:
     def __init__(self):
         self.model = Model()
 
-    def get_owners(self, phone='', first_name='', last_name=''):
+    def get_owners(self, phone: str = '', first_name: str = '', last_name: str = ''):
         owners = self.model.owners
         owners = filter(lambda o: phone in o.phone, owners)
         if first_name != '':
