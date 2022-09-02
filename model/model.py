@@ -147,6 +147,7 @@ class Model:
         values = [self.convert_empty_string(value) for value in values]
         try:
             cursor.execute(query, values)
+            owner.id = cursor.lastrowid
             self.db.commit()
             self.owners.append(owner)
         except Error as err:
