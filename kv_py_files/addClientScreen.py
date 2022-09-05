@@ -28,7 +28,7 @@ class AddClientScreen(Screen):
             self.ids['status_label'].text = 'Dodawanie...'
             app.controller.add_owner(new_owner)
             self.has_already_added = True
-            self.ids['status_label'].text = 'Dodano użytkowika'
+            self.ids['status_label'].text = 'Dodano użytkownika'
         except InsertOwnerError as err:
             self.ids['status_label'].text = err.msg
         self.ids['status_label'].change_color((191 / 255, 64 / 255, 191 / 255, 1))

@@ -9,8 +9,7 @@ class EditClientScreen(Screen):
     owner_edited: Owner
 
     def on_pre_enter(self, *args):
-        owner = app.root.get_screen('editSelectClientScreen').owner_selected
-        self.owner_edited = owner
+        owner = self.owner_edited
         input_phone_number = self.ids['txt_input_phone_number']
         input_first_name = self.ids['txt_input_first_name']
         input_last_name = self.ids['txt_input_last_name']

@@ -23,8 +23,7 @@ class EditDogScreen(Screen):
         self.sizes_dropdown = DropDown()
 
     def on_pre_enter(self, *args):
-        dog = app.root.get_screen('editSelectDogScreen').dog_selected
-        self.dog = dog
+        dog = self.dog
         input_name = self.ids['txt_input_name']
         input_note = self.ids['txt_input_note']
         if dog.name is not None:

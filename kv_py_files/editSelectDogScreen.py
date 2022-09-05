@@ -12,6 +12,4 @@ class EditSelectDogScreen(Screen):
     dog_selected: Dog
 
     def on_pre_enter(self, *args):
-        owner = app.root.get_screen('editClientScreen').owner_edited
-        self.owner_edited = owner
         self.ids['dogsDataTable'].update_data_rows()

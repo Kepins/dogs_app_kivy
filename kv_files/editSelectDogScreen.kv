@@ -25,6 +25,7 @@
                 disabled:
                     not root.is_row_selected
                 on_release:
+                    app.root.get_screen("editDogScreen").dog = root.dog_selected
                     app.root.current = "editDogScreen"
                     root.manager.transition.direction = "left"
             Button:
