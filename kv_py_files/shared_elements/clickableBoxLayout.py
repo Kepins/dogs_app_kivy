@@ -5,6 +5,8 @@ from kivy.uix.boxlayout import BoxLayout
 
 
 class ClickableBoxLayout(ButtonBehavior, BoxLayout):
+    obj = None
+
     def __init__(self, bg_color, **kwargs):
         # make sure we aren't overriding any important functionality
         super().__init__(**kwargs)
