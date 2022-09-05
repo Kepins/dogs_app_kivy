@@ -49,7 +49,3 @@ class DayCalendar(ButtonBehavior, BoxLayout):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
 
-    def change_color(self, bg_color):
-        with self.canvas.before:
-            Color(rgba=bg_color)
-            self.rect = Rectangle(size=self.size, pos=self.pos)

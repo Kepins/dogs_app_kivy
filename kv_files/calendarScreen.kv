@@ -3,10 +3,27 @@
 
     DefaultLayout:
         padding: '20dp', '20dp', '20dp', '10dp'
-        TitleLabel:
+        spacing: '5dp'
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: (1, None)
             height: "25dp"
-            font_size: '20dp'
-            text: root.title_text
+            Button:
+                size_hint: (None, 1)
+                width: '75dp'
+                text: 'Poprzedni'
+                on_release:
+                    root.on_prev_month()
+            TitleLabel:
+                size_hint: (1, 1)
+                font_size: '20dp'
+                text: root.title_text
+            Button:
+                size_hint: (None, 1)
+                width: '75dp'
+                text: 'Następny'
+                on_release:
+                    root.on_next_month()
         GridLayout:
             id: calendarGrid
             cols: 7

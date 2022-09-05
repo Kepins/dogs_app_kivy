@@ -27,19 +27,18 @@ class CalendarScreen(Screen):
         11: 'listopad',
         12: 'grudzień'
     }
-    today_bg_color = (210/255, 222/255, 250/255, 1)
+    today_bg_color = (190/255, 202/255, 230/255, 1)
     day_bg_colors = ((220/255, 220/255, 220/255, 1), (215/255, 215/255, 215/255, 1))
 
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        # self.year = datetime.date.today().year
-        # self.month = datetime.date.today().month
-        self.year = 2022
-        self.month = 6
+        self.year = datetime.date.today().year
+        self.month = datetime.date.today().month
+
 
     def on_pre_enter(self, *args):
-        self.title_text = self.__months_in_polish[self.month]
+        self.title_text = self.__months_in_polish[self.month] + ' ' + str(self.year)
         self.load_days()
 
     def load_days(self):
@@ -50,9 +49,10 @@ class CalendarScreen(Screen):
 
         color = 0
         for day in days_to_display:
-            dayCalendar = DayCalendar(bg_color=self.day_bg_colors[color%2], day=day)
             if day == datetime.date.today():
-                dayCalendar.change_color(bg_color=self.today_bg_color)
+                dayCalendar = DayCalendar(bg_color=self.today_bg_color, day=day)
+            else:
+                dayCalendar = DayCalendar(bg_color=self.day_bg_colors[color % 2], day=day)
             gridLayout.add_widget(dayCalendar)
 
             color+=1
@@ -64,3 +64,19 @@ class CalendarScreen(Screen):
         for i in range(35):
             days.append(first_day_display + datetime.timedelta(days=i))
         return days
+
+    def on_next_month(self):
+        if self.month + 1 > 12:
+            self.month = 1
+            self.year += 1
+        else:
+            self.month += 1
+        self.on_pre_enter()
+
+    def on_prev_month(self):
+        if self.month - 1 == 0:
+            self.month = 12
+            self.year -= 1
+        else:
+            self.month -= 1
+        self.on_pre_enter()
