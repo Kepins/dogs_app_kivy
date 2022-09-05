@@ -43,7 +43,9 @@ class DayCalendar(ButtonBehavior, BoxLayout):
         self.bind(size=self._update_rect, pos=self._update_rect)
 
     def on_release(self):
-        pass
+        app.root.get_screen("editDayScreen").day = self.day
+        app.root.transition.direction = 'left'
+        app.root.current = "editDayScreen"
 
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
