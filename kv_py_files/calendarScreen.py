@@ -28,7 +28,7 @@ class CalendarScreen(Screen):
         12: 'grudzień'
     }
     today_bg_color = (190/255, 202/255, 230/255, 1)
-    day_bg_colors = ((220/255, 220/255, 220/255, 1), (215/255, 215/255, 215/255, 1))
+    day_bg_colors = ((210/255, 210/255, 210/255, 1), (205/255, 205/255, 205/255, 1))
 
 
     def __init__(self, **kwargs):
@@ -49,10 +49,13 @@ class CalendarScreen(Screen):
 
         color = 0
         for day in days_to_display:
+            bg_color = self.day_bg_colors[color % 2]
             if day == datetime.date.today():
-                dayCalendar = DayCalendar(bg_color=self.today_bg_color, day=day)
-            else:
-                dayCalendar = DayCalendar(bg_color=self.day_bg_colors[color % 2], day=day)
+                bg_color = self.today_bg_color
+            if day.month != self.month:
+                bg_color = self.dim_color(bg_color)
+
+            dayCalendar = DayCalendar(bg_color=bg_color, day=day)
             gridLayout.add_widget(dayCalendar)
 
             color+=1
@@ -61,7 +64,7 @@ class CalendarScreen(Screen):
         month_first_day = datetime.date(year=self.year, month=self.month, day=1)
         first_day_display = month_first_day + datetime.timedelta(days=-month_first_day.weekday())
         days = []
-        for i in range(35):
+        for i in range(42):
             days.append(first_day_display + datetime.timedelta(days=i))
         return days
 
@@ -80,3 +83,13 @@ class CalendarScreen(Screen):
         else:
             self.month -= 1
         self.on_pre_enter()
+
+    @staticmethod
+    def dim_color(color):
+        dimmed_color = [color[0]-25/255, color[1]-25/255, color[2]-25/255, color[3]]
+        for i in range(len(dimmed_color)):
+            if dimmed_color[i] < 0:
+                dimmed_color[i] = 0
+            elif dimmed_color[i] > 1:
+                dimmed_color[i] = 1
+        return dimmed_color
