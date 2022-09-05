@@ -6,6 +6,9 @@
             text: 'Aplikacja'
         MyButton:
             text: 'Kalendarz'
+            on_release:
+                app.root.current = "calendarScreen"
+                root.manager.transition.direction = "left"
         MyButton:
             text: 'Klienci'
             on_release:

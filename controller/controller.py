@@ -1,3 +1,5 @@
+from datetime import date
+
 from mysql.connector import Error
 
 from entities.dog import Dog
@@ -30,6 +32,11 @@ class Controller:
         # temporary solution
         sizes_sorted = sorted(sizes, key=lambda s: s.id)
         return sizes_sorted
+
+    def get_appointments(self, day: date):
+        # appointment.date is datetime but day is date so .date() method must be used
+        appointments = list(filter(lambda a: a.date.date() == day, self.model.appointments))
+        return appointments
 
     def add_owner(self, owner: Owner):
         try:
