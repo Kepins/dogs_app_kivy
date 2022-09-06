@@ -31,7 +31,6 @@ class DayCalendar(ButtonBehavior, BoxLayout):
         # layout that displays appointments
         boxLayout = BoxLayout(orientation='vertical')
         appointments = app.controller.get_appointments(day=self.day)
-        appointments = sorted(appointments, key=lambda a: a.date)
         for appoint in appointments:
             label = AppointLabel(appoint=appoint)
             boxLayout.add_widget(label)

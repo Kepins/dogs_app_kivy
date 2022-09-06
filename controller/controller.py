@@ -36,6 +36,7 @@ class Controller:
     def get_appointments(self, day: date):
         # appointment.date is datetime but day is date so .date() method must be used
         appointments = list(filter(lambda a: a.date.date() == day, self.model.appointments))
+        appointments = sorted(appointments, key=lambda a: a.date)
         return appointments
 
     def add_owner(self, owner: Owner):
