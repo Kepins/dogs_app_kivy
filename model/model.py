@@ -49,7 +49,7 @@ class Model:
         cursor.execute(query)
         tuples = cursor.fetchall()
         for t in tuples:
-            owner = Owner(id=t[0], phone=t[1], first_name=t[2], last_name=t[3], note=t[4], dogs=[])
+            owner = Owner(id=t[0], phone_number=t[1], phone_name=t[2], first_name=t[3], last_name=t[4], note=t[5], dogs=[])
             self.owners.append(owner)
 
     def __load_sizes(self):
@@ -142,8 +142,8 @@ class Model:
 
     def insert_owner(self, owner: Owner):
         cursor = self.db.cursor()
-        query = "INSERT INTO Owner(phone, first_name, last_name, note) VALUES(%s, %s, %s, %s)"
-        values = (owner.phone, owner.first_name, owner.last_name, owner.note)
+        query = "INSERT INTO Owner(phone_number, phone_name, first_name, last_name, note) VALUES(%s, %s, %s, %s, %s)"
+        values = (owner.phone_number, owner.phone_name, owner.first_name, owner.last_name, owner.note)
         values = [self.convert_empty_string(value) for value in values]
         try:
             cursor.execute(query, values)
@@ -172,14 +172,18 @@ class Model:
     # owner parameter HAS TO be a new instance of Owner class and not changed existing instance
     def update_owner(self, owner: Owner):
         cursor = self.db.cursor()
-        query = "UPDATE Owner SET first_name = %s, last_name = %s, note = %s WHERE id = %s"
-        values = (owner.first_name, owner.last_name, owner.note, owner.id)
+        query = "UPDATE Owner " \
+                "SET phone_number = %s, phone_name = %s, first_name = %s, last_name = %s, note = %s " \
+                "WHERE id = %s"
+        values = (owner.phone_number, owner.phone_name, owner.first_name, owner.last_name, owner.note, owner.id)
         values = [self.convert_empty_string(value) for value in values]
         try:
             cursor.execute(query, values)
             self.db.commit()
 
             existing_owner = next(filter(lambda o: o.id == owner.id, self.owners))
+            existing_owner.phone_number = owner.phone_number
+            existing_owner.phone_name = owner.phone_name
             existing_owner.first_name = owner.first_name
             existing_owner.last_name = owner.last_name
             existing_owner.note = owner.note

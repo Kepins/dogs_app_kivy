@@ -11,6 +11,7 @@ class AddClientScreen(Screen):
 
     def on_pre_enter(self, *args):
         self.ids['txt_input_phone_number'].text = ''
+        self.ids['txt_input_phone_name'].text = ''
         self.ids['txt_input_first_name'].text = ''
         self.ids['txt_input_last_name'].text = ''
         self.ids['txt_input_note'].text = ''
@@ -19,11 +20,13 @@ class AddClientScreen(Screen):
 
     def on_add_button_click(self):
         phone_number = self.ids['txt_input_phone_number'].text
+        phone_name = self.ids['txt_input_phone_name'].text
         first_name = self.ids['txt_input_first_name'].text
         last_name = self.ids['txt_input_last_name'].text
         note = self.ids['txt_input_note'].text
 
-        new_owner = Owner(id=None, phone=phone_number, first_name=first_name, last_name=last_name, note=note, dogs=[])
+        new_owner = Owner(id=None, phone_number=phone_number, phone_name=phone_name,
+                          first_name=first_name, last_name=last_name, note=note, dogs=[])
         try:
             self.ids['status_label'].text = 'Dodawanie...'
             app.controller.add_owner(new_owner)

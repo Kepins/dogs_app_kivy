@@ -7,7 +7,7 @@ from kv_py_files.dogsApp import app
 
 class EditSelectClientScreen(Screen):
     phone_number: str
-    first_name: str
+    phone_name: str
     last_name: str
     is_row_selected = BooleanProperty(False)
     owner_selected = ObjectProperty(None)
@@ -19,10 +19,10 @@ class EditSelectClientScreen(Screen):
     def on_pre_enter(self, *args):
         # reset to default state
         self.phone_number = ''
-        self.first_name = ''
+        self.phone_name = ''
         self.last_name = ''
         self.ids['txt_input_phone_number'].text = ''
-        self.ids['txt_input_first_name'].text = ''
+        self.ids['txt_input_phone_name'].text = ''
         self.ids['txt_input_last_name'].text = ''
 
         if not self.bound:
@@ -36,4 +36,6 @@ class EditSelectClientScreen(Screen):
     def update_rows(self):
         dogsDataTable = self.ids['clientsDataTable']
         dogsDataTable.list_objects = []
-        dogsDataTable.list_objects = app.controller.get_owners(str(self.phone_number), str(self.first_name), str(self.last_name))
+        dogsDataTable.list_objects = app.controller.get_owners(phone_number=str(self.phone_number),
+                                                               phone_name=str(self.phone_name),
+                                                               last_name=str(self.last_name))

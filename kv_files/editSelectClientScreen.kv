@@ -15,7 +15,7 @@
             height: self.minimum_height
             pos_hint: { "center_x": 0.5}
             Label:
-                text: 'tel.'
+                text: 'numer tel'
                 color: (0,0,0,1)
             LineTextInput:
                 id: txt_input_phone_number
@@ -24,13 +24,13 @@
                     root.phone_number = self.text
                     root.update_rows()
             Label:
-                text: 'imię'
+                text: 'nazwa w tel'
                 color: (0,0,0,1)
             LineTextInput:
-                id: txt_input_first_name
+                id: txt_input_phone_name
                 font_size: '15dp'
                 on_text:
-                    root.first_name = self.text
+                    root.phone_name = self.text
                     root.update_rows()
             Label:
                 text: 'nazwisko'

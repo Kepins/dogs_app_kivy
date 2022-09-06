@@ -14,11 +14,11 @@ class Controller:
     def __init__(self):
         self.model = Model()
 
-    def get_owners(self, phone: str = '', first_name: str = '', last_name: str = ''):
+    def get_owners(self, phone_number: str = '', phone_name: str = '', last_name: str = ''):
         owners = self.model.owners
-        owners = filter(lambda o: phone in o.phone, owners)
-        if first_name != '':
-            owners = filter(lambda o: o.first_name is not None and o.first_name.startswith(first_name), owners)
+        owners = filter(lambda o: phone_number in o.phone_number, owners)
+        if phone_name != '':
+            owners = filter(lambda o: o.phone_name is not None and o.phone_name.startswith(phone_name), owners)
         if last_name != '':
             owners = filter(lambda o: o.last_name is not None and o.last_name.startswith(last_name), owners)
         return list(owners)

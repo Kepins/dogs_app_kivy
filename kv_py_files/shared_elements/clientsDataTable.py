@@ -10,7 +10,7 @@ class ClientsDataTable(MyDataTable):
                          selected_color=(0, 220/255, 220/255, 1),
                          not_selected_color=(220/255, 220/255, 220/255, 1),
                          height_row=dp(30),
-                         columns_names=('telefon', 'imię', 'nazwisko', 'notka'),
-                         attr_names=('phone', 'first_name', 'last_name', 'note'),
-                         columns_widths=(4/18, 4/18, 4/18, 6/18),
+                         columns_names=('telefon', 'nazwa w tel', 'imię','nazwisko', 'notka'),
+                         attr_names=('phone_number', 'phone_name', 'first_name' ,'last_name', 'note'),
+                         columns_widths=(4/24, 6/24, 4/24, 4/24, 6/24),
                          **kwargs)

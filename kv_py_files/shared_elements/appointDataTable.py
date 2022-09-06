@@ -10,8 +10,8 @@ class AppointDataTable(MyDataTable):
                          selected_color=(0, 220/255, 220/255, 1),
                          not_selected_color=(220/255, 220/255, 220/255, 1),
                          height_row=dp(30),
-                         columns_names=('godzina', 'telefon', 'nazwisko', 'rasa'),
-                         attr_names=('date', 'dog.owner.phone', 'dog.owner.last_name', 'dog.breed.name'),
+                         columns_names=('godzina', 'nazwa w tel', 'nazwisko', 'rasa'),
+                         attr_names=('date', 'dog.owner.phone_name', 'dog.owner.last_name', 'dog.breed.name'),
                          attr_func=(lambda d: d.strftime("%H:%M"), super().check_none, super().check_none, super().check_none),
                          columns_widths=(4/18, 5/18, 3/18, 6/18),
                          **kwargs)

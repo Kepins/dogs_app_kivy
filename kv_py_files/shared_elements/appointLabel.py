@@ -12,4 +12,4 @@ class AppointLabel(Label):
         self.height = dp(12)
         self.font_size = dp(12)
         self.color = (0.1, 0.1, 0.1, 1)
-        self.text = '{t} {phone}'.format(t=appoint.date.strftime("%H:%M"), phone=appoint.dog.owner.phone)
+        self.text = '{t} {phone}'.format(t=appoint.date.strftime("%H:%M"), phone=appoint.dog.owner.phone_name)
