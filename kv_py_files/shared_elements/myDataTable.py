@@ -1,3 +1,5 @@
+import functools
+
 from kivy.graphics import Color, Rectangle
 from kivy.properties import ListProperty, BooleanProperty, ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
@@ -9,22 +11,22 @@ from kv_py_files.shared_elements.clickableBoxLayout import ClickableBoxLayout
 
 
 class MyDataTable(BoxLayout):
-    is_row_selected: BooleanProperty
-    object_selected: ObjectProperty
+    is_row_selected: BooleanProperty = BooleanProperty(False)
+    object_selected: ObjectProperty = ObjectProperty(None)
     row_selected: ClickableBoxLayout | None = None
     gridLayout_rows: GridLayout
     # dp() should probably be used
     height_row: float
     # columns_names will be displayed in first row
-    columns_names: list[str]
+    columns_names: tuple[str]
     # attr_names will be used in getattr()
-    attr_names: list[str]
+    attr_names: tuple[str]
     # relative widths that should add up to 1
     columns_widths: tuple[float]
     bg_color: tuple[float]
     selected_color: tuple[float]
     not_selected_color: tuple[float]
-    list_objects: ListProperty
+    list_objects: ListProperty = ListProperty()
 
     def __init__(self, **kwargs):
         self.bg_color = kwargs.pop('bg_color')
@@ -60,19 +62,18 @@ class MyDataTable(BoxLayout):
         self.rect.size = instance.size
 
     # called when self.list_objects changes
-    def on_list_objects(self, instance, value):
+    def on_list_objects(self, dogsDataTable, new_list_objects):
         self.is_row_selected = False
-        self.object_selected = None
         self.row_selected = None
         self.gridLayout_rows.clear_widgets()
 
-        for obj in instance:
+        for obj in new_list_objects:
             row = ClickableBoxLayout(bg_color=self.not_selected_color, orientation='horizontal', size_hint=(1, None), height=self.height_row)
             row.obj = obj
             row.bind(on_press=self.row_select)
             values = []
             for attr_name in self.attr_names:
-                values.append(getattr(obj, attr_name))
+                values.append(self.rgetattr(obj, attr_name))
             for value, width in zip(values, self.columns_widths):
                 label = Label(size_hint=(width, 1))
                 if value is not None:
@@ -91,3 +92,10 @@ class MyDataTable(BoxLayout):
         self.row_selected = row
         self.row_selected.change_color(self.selected_color)
 
+    # getattr that works on nested objects
+    # ref: https://stackoverflow.com/questions/31174295/getattr-and-setattr-on-nested-subobjects-chained-properties
+    @staticmethod
+    def rgetattr(obj, attr, *args):
+        def _getattr(obj, attr):
+            return getattr(obj, attr, *args)
+        return functools.reduce(_getattr, [obj] + attr.split('.'))
