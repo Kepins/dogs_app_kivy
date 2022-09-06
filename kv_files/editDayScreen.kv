@@ -16,6 +16,7 @@
             Button:
                 text: 'Dodaj'
                 on_release:
+                    app.root.get_screen("addAppointScreen").day = root.day
                     app.root.current = "addAppointScreen"
                     root.manager.transition.direction = "left"
             Button:
