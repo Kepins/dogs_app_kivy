@@ -27,3 +27,10 @@
         GridLayout:
             id: calendarGrid
             cols: 7
+        Button:
+            size_hint: (1, None)
+            height: '30dp'
+            text: 'Wróć'
+            on_release:
+                app.root.current = "welcomeScreen"
+                root.manager.transition.direction = "right"
