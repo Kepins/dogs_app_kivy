@@ -1,32 +1,16 @@
 import datetime
-import calendar
+
 
 from kivy.properties import StringProperty
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen
 
 from kv_py_files.shared_elements.dayCalendar import DayCalendar
-
+import controller.translations as translations
 
 class CalendarScreen(Screen):
     year: int
     month: int
     title_text = StringProperty()
-    __months_in_polish = {
-        1: 'styczeń',
-        2: 'luty',
-        3: 'marzec',
-        4: 'kwiecień',
-        5: 'maj',
-        6: 'czerwiec',
-        7: 'lipiec',
-        8: 'sierpień',
-        9: 'wrzesień',
-        10: 'październik',
-        11: 'listopad',
-        12: 'grudzień'
-    }
     today_bg_color = (190/255, 202/255, 230/255, 1)
     day_bg_colors = ((210/255, 210/255, 210/255, 1), (205/255, 205/255, 205/255, 1))
 
@@ -38,7 +22,7 @@ class CalendarScreen(Screen):
 
 
     def on_pre_enter(self, *args):
-        self.title_text = self.__months_in_polish[self.month] + ' ' + str(self.year)
+        self.title_text = translations.months_names[self.month] + ' ' + str(self.year)
         self.load_days()
 
     def load_days(self):

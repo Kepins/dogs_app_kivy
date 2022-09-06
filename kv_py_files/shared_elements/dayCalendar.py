@@ -35,6 +35,7 @@ class DayCalendar(ButtonBehavior, BoxLayout):
         day_label.text = self.day.strftime('%d')
         day_label.size_hint = (1, None)
         day_label.height = dp(15)
+        day_label.color = (0.3, 0.3, 0.7, 1)
         self.add_widget(day_label)
 
         with self.canvas.before:

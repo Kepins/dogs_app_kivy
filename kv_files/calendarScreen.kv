@@ -24,6 +24,31 @@
                 text: 'Następny'
                 on_release:
                     root.on_next_month()
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: (1, None)
+            height: "25dp"
+            Label:
+                text: 'pon'
+                color: (0,0,0,1)
+            Label:
+                text: 'wt'
+                color: (0,0,0,1)
+            Label:
+                text: 'śr'
+                color: (0,0,0,1)
+            Label:
+                text: 'czw'
+                color: (0,0,0,1)
+            Label:
+                text: 'pt'
+                color: (0,0,0,1)
+            Label:
+                text: 'sob'
+                color: (0,0,0,1)
+            Label:
+                text: 'nie'
+                color: (0,0,0,1)
         GridLayout:
             id: calendarGrid
             cols: 7

@@ -1,2 +1,34 @@
+#: import AppointDataTable kv_py_files.shared_elements.appointDataTable
+
 <EditDayScreen>:
     name: "editDayScreen"
+    DefaultLayout:
+        TitleLabel:
+            text: root.title
+        AppointDataTable:
+            id: appointDataTable
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: 0, '20dp', 0, 0
+            spacing: '15dp'
+            size_hint: 1, None
+            height: '60dp'
+            Button:
+                text: 'Dodaj'
+                on_release:
+                    app.root.current = "addAppointScreen"
+                    root.manager.transition.direction = "left"
+            Button:
+                id: button_edit
+                text: 'Edytuj'
+                disabled:
+                    not root.is_row_selected
+                on_release:
+                    app.root.get_screen("editAppointScreen").appoint = root.appoint_selected
+                    app.root.current = "editAppointScreen"
+                    root.manager.transition.direction = "left"
+            Button:
+                text: 'Anuluj'
+                on_release:
+                    app.root.current = "calendarScreen"
+                    root.manager.transition.direction = "right"

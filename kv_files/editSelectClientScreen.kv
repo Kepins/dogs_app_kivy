@@ -22,7 +22,7 @@
                 font_size: '15dp'
                 on_text:
                     root.phone_number = self.text
-                    root.update_data()
+                    root.update_rows()
             Label:
                 text: 'imię'
                 color: (0,0,0,1)
@@ -31,7 +31,7 @@
                 font_size: '15dp'
                 on_text:
                     root.first_name = self.text
-                    root.update_data()
+                    root.update_rows()
             Label:
                 text: 'nazwisko'
                 color: (0,0,0,1)
@@ -40,7 +40,7 @@
                 font_size: '15dp'
                 on_text:
                     root.last_name = self.text
-                    root.update_data()
+                    root.update_rows()
         ClientsDataTable:
             id: clientsDataTable
         BoxLayout:

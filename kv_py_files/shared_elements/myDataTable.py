@@ -8,6 +8,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 
+from typing import Callable
 
 class ClickableBoxLayout(ButtonBehavior, BoxLayout):
     obj = None
@@ -43,6 +44,8 @@ class MyDataTable(BoxLayout):
     columns_names: tuple[str]
     # attr_names will be used in getattr()
     attr_names: tuple[str]
+    # attr_func functions that will be called on each attribute
+    attr_func: tuple[Callable[[object], str]]
     # relative widths that should add up to 1
     columns_widths: tuple[float]
     bg_color: tuple[float]
@@ -58,6 +61,10 @@ class MyDataTable(BoxLayout):
         self.columns_names = kwargs.pop('columns_names')
         self.attr_names = kwargs.pop('attr_names')
         self.columns_widths = kwargs.pop('columns_widths')
+        if 'attr_func' in kwargs:
+            self.attr_func = kwargs.pop('attr_func')
+        else:
+            self.attr_func = tuple([self.check_none for _ in range(len(self.attr_names))])
         super().__init__(**kwargs)
         with self.canvas.before:
             Color(rgba=self.bg_color)
@@ -96,12 +103,9 @@ class MyDataTable(BoxLayout):
             values = []
             for attr_name in self.attr_names:
                 values.append(self.rgetattr(obj, attr_name))
-            for value, width in zip(values, self.columns_widths):
+            for value, func, width in zip(values, self.attr_func, self.columns_widths):
                 label = Label(size_hint=(width, 1))
-                if value is not None:
-                    label.text = value
-                else:
-                    label.text = ''
+                label.text = func(value)
                 row.add_widget(label)
             self.gridLayout_rows.add_widget(row)
 
@@ -113,6 +117,13 @@ class MyDataTable(BoxLayout):
             self.row_selected.change_color(self.not_selected_color)
         self.row_selected = row
         self.row_selected.change_color(self.selected_color)
+
+    @staticmethod
+    def check_none(obj: object) -> str:
+        if obj is None:
+            return ''
+        else:
+            return str(obj)
 
     # getattr that works on nested objects
     # ref: https://stackoverflow.com/questions/31174295/getattr-and-setattr-on-nested-subobjects-chained-properties
