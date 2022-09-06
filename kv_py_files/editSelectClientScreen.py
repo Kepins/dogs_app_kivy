@@ -1,7 +1,8 @@
-from kivy.properties import BooleanProperty
+from kivy.properties import BooleanProperty, ObjectProperty
 from kivy.uix.screenmanager import Screen
 
-from entities.owner import Owner
+
+from kv_py_files.dogsApp import app
 
 
 class EditSelectClientScreen(Screen):
@@ -9,7 +10,8 @@ class EditSelectClientScreen(Screen):
     first_name: str
     last_name: str
     is_row_selected = BooleanProperty(False)
-    owner_selected: Owner
+    owner_selected = ObjectProperty(None)
+    bound = False
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -22,7 +24,16 @@ class EditSelectClientScreen(Screen):
         self.ids['txt_input_phone_number'].text = ''
         self.ids['txt_input_first_name'].text = ''
         self.ids['txt_input_last_name'].text = ''
-        self.ids['clientsDataTable'].update_data_rows()
 
-    def update_data(self):
-        self.ids['clientsDataTable'].update_data_rows(str(self.phone_number), str(self.first_name), str(self.last_name))
+        if not self.bound:
+            dogsDataTable = self.ids['clientsDataTable']
+            dogsDataTable.bind(is_row_selected=self.setter('is_row_selected'))
+            dogsDataTable.bind(object_selected=self.setter('owner_selected'))
+            self.bound = True
+
+        self.update_rows()
+
+    def update_rows(self):
+        dogsDataTable = self.ids['clientsDataTable']
+        dogsDataTable.list_objects = []
+        dogsDataTable.list_objects = app.controller.get_owners(str(self.phone_number), str(self.first_name), str(self.last_name))
