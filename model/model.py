@@ -1,3 +1,4 @@
+import datetime
 import os
 from dotenv import load_dotenv
 import mysql.connector
@@ -123,12 +124,13 @@ class Model:
         for t in tuples:
             id = t[0]
             date = t[1]
-            id_dog = t[2]
+            time = datetime.timedelta(minutes=t[2])
+            id_dog = t[3]
             dog = next(filter(lambda d: d.id == id_dog, self.dogs))
-            id_service = t[3]
+            id_service = t[4]
             service = next(filter(lambda s: s.id == id_service, self.services))
-            cost = t[4]
-            appointment = Appointment(id=id, date=date, dog=dog, service=service, cost=cost)
+            cost = t[5]
+            appointment = Appointment(id=id, date=date, time=time,dog=dog, service=service, cost=cost)
             dog.appointments.append(appointment)
             service.appointments.append(appointment)
             self.appointments.append(appointment)

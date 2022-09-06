@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from entities.dog import Dog
     from entities.service import Service
 
-    from datetime import datetime
+    import datetime
     from decimal import *
 
 @dataclass
@@ -14,5 +14,6 @@ class Appointment:
     id: int
     dog: Dog
     service: Service
-    date: datetime
+    date: datetime.datetime
+    time: datetime.timedelta
     cost: Decimal
