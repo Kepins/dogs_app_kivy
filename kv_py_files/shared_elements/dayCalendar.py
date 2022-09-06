@@ -20,6 +20,14 @@ class DayCalendar(ButtonBehavior, BoxLayout):
         self.orientation = 'vertical'
         self.day = day
 
+        # label that displays number of the day
+        day_label = Label()
+        day_label.text = self.day.strftime('%d')
+        day_label.size_hint = (1, None)
+        day_label.height = dp(15)
+        day_label.color = (0.3, 0.3, 0.7, 1)
+        self.add_widget(day_label)
+
         # layout that displays appointments
         boxLayout = BoxLayout(orientation='vertical')
         appointments = app.controller.get_appointments(day=self.day)
@@ -29,14 +37,6 @@ class DayCalendar(ButtonBehavior, BoxLayout):
             boxLayout.add_widget(label)
         boxLayout.add_widget(Widget())
         self.add_widget(boxLayout)
-
-        # label that displays number of the day
-        day_label = Label()
-        day_label.text = self.day.strftime('%d')
-        day_label.size_hint = (1, None)
-        day_label.height = dp(15)
-        day_label.color = (0.3, 0.3, 0.7, 1)
-        self.add_widget(day_label)
 
         with self.canvas.before:
             Color(rgba=bg_color)
