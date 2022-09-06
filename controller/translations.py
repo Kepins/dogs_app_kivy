@@ -1,4 +1,4 @@
-
+import calendar
 
 months_names = {
         1: 'styczeń',
@@ -28,4 +28,14 @@ genitive_months_names = {
         10: 'października',
         11: 'listopada',
         12: 'grudnia'
+}
+
+abbr_weekdays = {
+        calendar.MONDAY: 'pon',
+        calendar.TUESDAY: 'wt',
+        calendar.WEDNESDAY: 'śr',
+        calendar.THURSDAY: 'czw',
+        calendar.FRIDAY: 'pt',
+        calendar.SATURDAY: 'sob',
+        calendar.SUNDAY: 'nie',
 }

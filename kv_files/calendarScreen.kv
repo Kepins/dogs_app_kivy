@@ -13,7 +13,7 @@
                 width: '75dp'
                 text: 'Poprzedni'
                 on_release:
-                    root.on_prev_month()
+                    root.on_prev_week()
             TitleLabel:
                 size_hint: (1, 1)
                 font_size: '20dp'
@@ -23,32 +23,11 @@
                 width: '75dp'
                 text: 'Następny'
                 on_release:
-                    root.on_next_month()
+                    root.on_next_week()
         BoxLayout:
             orientation: "horizontal"
             size_hint: (1, None)
             height: "25dp"
-            Label:
-                text: 'pon'
-                color: (0,0,0,1)
-            Label:
-                text: 'wt'
-                color: (0,0,0,1)
-            Label:
-                text: 'śr'
-                color: (0,0,0,1)
-            Label:
-                text: 'czw'
-                color: (0,0,0,1)
-            Label:
-                text: 'pt'
-                color: (0,0,0,1)
-            Label:
-                text: 'sob'
-                color: (0,0,0,1)
-            Label:
-                text: 'nie'
-                color: (0,0,0,1)
         GridLayout:
             id: calendarGrid
             cols: 7
