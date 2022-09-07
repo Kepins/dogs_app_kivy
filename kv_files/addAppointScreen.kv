@@ -1,2 +1,38 @@
 <AddAppointScreen>
     name: "addAppointScreen"
+    DefaultLayout:
+        TitleLabel:
+            text: "Dodaj wizytę"
+        GridLayout:
+            cols: 2
+            row_default_height: '40dp'
+            row_force_default: True
+            spacing: 0, '30dp'
+            size_hint: 1, None
+            height: self.minimum_height
+            pos_hint: { "center_x": 0.5}
+            Label:
+                text: 'data: '
+                size_hint: None, 1
+                width: '80dp'
+                color: (0,0,0,1)
+            AppointButton:
+                id: button_date
+                text: root.day_str
+                disabled: True
+            Label:
+                text: 'godzina: '
+                size_hint: None, 1
+                width: '80dp'
+                color: (0,0,0,1)
+            BoxLayout:
+                orientation: 'horizontal'
+                AppointButton:
+                Label:
+                    text: ":"
+                    color:(0,0,0,1)
+                    size_hint: (None, 1)
+                    width: dp(8)
+                AppointButton:
+        Widget:
+
