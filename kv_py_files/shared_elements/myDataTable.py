@@ -91,7 +91,7 @@ class MyDataTable(BoxLayout):
         self.rect.size = instance.size
 
     # called when self.list_objects changes
-    def on_list_objects(self, dogsDataTable, new_list_objects):
+    def on_list_objects(self, myDataTable, new_list_objects):
         self.is_row_selected = False
         self.row_selected = None
         self.gridLayout_rows.clear_widgets()
