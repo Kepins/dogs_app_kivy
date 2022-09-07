@@ -65,7 +65,7 @@ class AddDogScreen(Screen):
         note = input_note.text
         owner = self.owner
 
-        new_dog = Dog(id=None, owner=owner, name=name, breed=breed, size=size, note=note, appointments=None)
+        new_dog = Dog(id=None, owner=owner, name=name, breed=breed, size=size, note=note, appointments=[])
         try:
             self.ids['status_label'].text = 'Dodawanie...'
             app.controller.add_dog(new_dog)
