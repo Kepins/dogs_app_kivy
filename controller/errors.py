@@ -57,3 +57,15 @@ class EditOwnerError(Exception):
             self.msg = 'Jedno z pól ma za dużo znaków'
         else:
             self.msg = 'Błąd: ' + sql_error.msg
+
+
+class InsertAppointmentError(Exception):
+    sql_error: MySQLError
+    msg: str
+
+    def __init__(self, sql_error: MySQLError):
+        self.sql_error = sql_error
+        if sql_error.errno == 1048:
+            self.msg = 'Wizyta musi mieć wybraną usługę'
+        else:
+            self.msg = 'Błąd: ' + sql_error.msg

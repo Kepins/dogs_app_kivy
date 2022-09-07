@@ -2,9 +2,10 @@ from datetime import date
 
 from mysql.connector import Error
 
+from entities.appointment import Appointment
 from entities.dog import Dog
 from entities.owner import Owner
-from controller.errors import InsertOwnerError, InsertDogError, EditDogError, EditOwnerError
+from controller.errors import InsertOwnerError, InsertDogError, EditDogError, EditOwnerError, InsertAppointmentError
 from model.model import Model
 
 
@@ -39,6 +40,10 @@ class Controller:
         appointments = sorted(appointments, key=lambda a: a.date)
         return appointments
 
+    def get_services(self):
+        services = self.model.services
+        return services
+
     def add_owner(self, owner: Owner):
         try:
             self.model.insert_owner(owner)
@@ -62,3 +67,9 @@ class Controller:
             self.model.update_owner(owner)
         except Error as err:
             raise EditOwnerError(err)
+
+    def add_appointment(self, appoint: Appointment):
+        try:
+            self.model.insert_appointment(appoint)
+        except Error as err:
+            raise InsertAppointmentError(err)

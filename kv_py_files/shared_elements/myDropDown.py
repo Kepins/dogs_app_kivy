@@ -18,7 +18,9 @@ class MyDropDown(DropDown):
     main_button: ButtonWithObject
     height_row: float
     btn_color: tuple[float]
-    attr_name: str
+    # if attr_name is None then obj ButtonWithObject.obj is used
+    # else ButtonWithObject.obj.attr_name is used
+    attr_name: str | None
     attr_func: Callable[[object], str]
     list_objects: ListProperty = ListProperty()
 
@@ -39,13 +41,21 @@ class MyDropDown(DropDown):
 
     def update_main_button(self, obj: object):
         self.main_button.obj = obj
-        self.main_button.text = self.attr_func(self.rgetattr(obj, self.attr_name))
+        if self.attr_name is not None:
+            val = self.rgetattr(obj, self.attr_name)
+        else:
+            val = obj
+        self.main_button.text = self.attr_func(val)
 
     def on_list_objects(self, myDropDown, new_list_objects):
         self.clear_widgets()
         for obj in new_list_objects:
             button_with_obj = ButtonWithObject(obj)
-            button_with_obj.text = self.attr_func(self.rgetattr(obj, self.attr_name))
+            if self.attr_name is not None:
+                val = self.rgetattr(obj, self.attr_name)
+            else:
+                val = obj
+            button_with_obj.text = self.attr_func(val)
             button_with_obj.size_hint = (1, None)
             button_with_obj.height = self.height_row
             button_with_obj.background_normal = ''

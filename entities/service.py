@@ -8,6 +8,6 @@ if TYPE_CHECKING:
 
 @dataclass
 class Service:
-    id: str
+    id: int
     name: str
     appointments: list[Appointment] = field(repr=False)

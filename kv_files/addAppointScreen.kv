@@ -1,13 +1,14 @@
 <AddAppointScreen>
     name: "addAppointScreen"
     DefaultLayout:
+        spacing: '15dp'
         TitleLabel:
             text: "Dodaj wizytę"
         GridLayout:
             cols: 2
-            row_default_height: '40dp'
+            row_default_height: '35dp'
             row_force_default: True
-            spacing: 0, '30dp'
+            spacing: 0, '15dp'
             size_hint: 1, None
             height: self.minimum_height
             pos_hint: { "center_x": 0.5}
@@ -28,11 +29,82 @@
             BoxLayout:
                 orientation: 'horizontal'
                 AppointButton:
+                    id: button_hour_dropdown
+                    obj: None
                 Label:
                     text: ":"
                     color:(0,0,0,1)
                     size_hint: (None, 1)
                     width: dp(8)
                 AppointButton:
+                    id: button_min_dropdown
+                    obj: None
+            Label:
+                text: 'czas: '
+                size_hint: None, 1
+                width: '80dp'
+                color: (0,0,0,1)
+            AppointButton:
+                id: button_duration_dropdown
+                obj: None
+            Label:
+                text: 'usługa: '
+                size_hint: None, 1
+                width: '80dp'
+                color: (0,0,0,1)
+            AppointButton:
+                id: button_service_dropdown
+                obj: None
+            Label:
+                text: 'koszt: '
+                size_hint: None, 1
+                width: '80dp'
+                color: (0,0,0,1)
+            LineTextInput:
+                id: txt_input_cost
+                input_filter: 'int'
+                halign: 'center'
+                obj: None
+            Label:
+                text: 'właściciel: '
+                size_hint: None, 1
+                width: '80dp'
+                color: (0,0,0,1)
+            AppointButton:
+                id: button_owner
+                text: root.owner_str
+                on_release:
+                    app.root.get_screen("selectOwnerScreen").prev_screen = app.root.current
+                    app.root.current = "selectOwnerScreen"
+                    root.manager.transition.direction = "left"
+        DogsDataTable:
+            id: dogsDataTable
+            size_hint: (1, None)
+            height: '105dp'
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: 0, '20dp', 0, 0
+            spacing: '15dp'
+            size_hint: 1, None
+            height: '60dp'
+            Button:
+                text: 'Dodaj'
+                on_release:
+                    root.add_button_click()
+                disabled:
+                    root.has_already_added or not root.is_dog_selected
+            Button:
+                text: 'Anuluj'
+                on_release:
+                    app.root.current = "editDayScreen"
+                    root.manager.transition.direction = "right"
+        # this widget is used to align buttons to the top of the screen
         Widget:
+    StatusLabel:
+        id: status_label
+        text: ''
+        size_hint: 1, None
+        height: '25dp'
+        color: (1, 1, 1, 1)
+        pos_hint: {"y": 0}
 

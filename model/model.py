@@ -171,6 +171,21 @@ class Model:
         except Error as err:
             raise err
 
+    def insert_appointment(self, appoint: Appointment):
+        cursor = self.db.cursor()
+        query = "INSERT INTO Appointment(date, time, id_dog, id_service, cost) VALUES(%s, %s, %s, %s, %s)"
+        values = (appoint.date, appoint.time.total_seconds()//60, appoint.dog.id, appoint.service.id, appoint.cost)
+        values = [self.convert_empty_string(value) for value in values]
+        try:
+            cursor.execute(query, values)
+            appoint.id = cursor.lastrowid
+            self.db.commit()
+            self.appointments.append(appoint)
+            appoint.service.appointments.append(appoint)
+            appoint.dog.appointments.append(appoint)
+        except Error as err:
+            raise err
+
     # owner parameter HAS TO be a new instance of Owner class and not changed existing instance
     def update_owner(self, owner: Owner):
         cursor = self.db.cursor()

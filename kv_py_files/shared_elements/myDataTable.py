@@ -10,6 +10,7 @@ from kivy.uix.scrollview import ScrollView
 
 from typing import Callable
 
+
 class ClickableBoxLayout(ButtonBehavior, BoxLayout):
     obj = None
 
@@ -35,7 +36,7 @@ class ClickableBoxLayout(ButtonBehavior, BoxLayout):
 
 class MyDataTable(BoxLayout):
     is_row_selected: BooleanProperty = BooleanProperty(False)
-    object_selected: ObjectProperty = ObjectProperty(None)
+    object_selected: ObjectProperty = ObjectProperty(None, allownone=True)
     row_selected: ClickableBoxLayout | None = None
     gridLayout_rows: GridLayout
     # dp() should probably be used
@@ -93,6 +94,7 @@ class MyDataTable(BoxLayout):
     # called when self.list_objects changes
     def on_list_objects(self, myDataTable, new_list_objects):
         self.is_row_selected = False
+        self.object_selected = None
         self.row_selected = None
         self.gridLayout_rows.clear_widgets()
 

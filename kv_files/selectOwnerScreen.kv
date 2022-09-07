@@ -1,0 +1,67 @@
+#: import ClientsDataTable kv_py_files.shared_elements.clientsDataTable
+
+<SelectOwnerScreen>:
+    name: "selectOwnerScreen"
+    DefaultLayout:
+        TitleLabel:
+            text: 'Wybieranie klienta'
+        GridLayout:
+            rows: 2
+            orientation: 'tb-lr'
+            row_default_height: '30dp'
+            row_force_default: True
+            spacing: '30dp', '0dp'
+            size_hint: 1, None
+            height: self.minimum_height
+            pos_hint: { "center_x": 0.5}
+            Label:
+                text: 'numer tel'
+                color: (0,0,0,1)
+            LineTextInput:
+                id: txt_input_phone_number
+                font_size: '15dp'
+                on_text:
+                    root.phone_number = self.text
+                    root.update_rows()
+            Label:
+                text: 'nazwa w tel'
+                color: (0,0,0,1)
+            LineTextInput:
+                id: txt_input_phone_name
+                font_size: '15dp'
+                on_text:
+                    root.phone_name = self.text
+                    root.update_rows()
+            Label:
+                text: 'nazwisko'
+                color: (0,0,0,1)
+            LineTextInput:
+                id: txt_input_last_name
+                font_size: '15dp'
+                on_text:
+                    root.last_name = self.text
+                    root.update_rows()
+        ClientsDataTable:
+            id: clientsDataTable
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: 0, '20dp', 0, 0
+            spacing: '15dp'
+            size_hint: 1, None
+            height: '60dp'
+            Button:
+                id: button_edit
+                text: 'Wybierz'
+                disabled:
+                    not root.is_row_selected
+                on_release:
+                    app.root.get_screen(root.prev_screen).owner = root.owner_selected
+                    app.root.get_screen(root.prev_screen).reset = False
+                    app.root.current = root.prev_screen
+                    root.manager.transition.direction = "left"
+            Button:
+                text: 'Anuluj'
+                on_release:
+                    app.root.get_screen(root.prev_screen).reset = False
+                    app.root.current = root.prev_screen
+                    root.manager.transition.direction = "right"
