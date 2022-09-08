@@ -10,7 +10,7 @@ from kivy.uix.widget import Widget
 
 from controller import translations
 from kv_py_files.dogsApp import app
-from kv_py_files.shared_elements.appointLabel import AppointLabel
+from kv_py_files.shared_elements.appointWidget import AppointWidget
 
 
 class DayCalendar(ButtonBehavior, BoxLayout):
@@ -43,8 +43,8 @@ class DayCalendar(ButtonBehavior, BoxLayout):
         boxLayout = BoxLayout(orientation='vertical')
         appointments = app.controller.get_appointments(day=self.day)
         for appoint in appointments:
-            label = AppointLabel(appoint=appoint)
-            boxLayout.add_widget(label)
+            widget = AppointWidget(appoint=appoint)
+            boxLayout.add_widget(widget)
         boxLayout.add_widget(Widget())
         self.add_widget(boxLayout)
 
