@@ -6,16 +6,19 @@ from kivy.uix.label import Label
 
 from datetime import date
 
+from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.widget import Widget
 
 from controller import translations
+from entities.appointment import Appointment
 from kv_py_files.dogsApp import app
 from kv_py_files.shared_elements.appointWidget import AppointWidget
 
 
 class DayCalendar(ButtonBehavior, BoxLayout):
     day: date
-
+    top_hour = 7
+    bot_hour = 19
     def __init__(self, bg_color, day: date, **kwargs):
         super().__init__(**kwargs)
         self.orientation = 'vertical'
@@ -40,13 +43,15 @@ class DayCalendar(ButtonBehavior, BoxLayout):
         self.add_widget(day_label)
 
         # layout that displays appointments
-        boxLayout = BoxLayout(orientation='vertical')
+        relativeLayout = RelativeLayout()
         appointments = app.controller.get_appointments(day=self.day)
         for appoint in appointments:
             widget = AppointWidget(appoint=appoint)
-            boxLayout.add_widget(widget)
-        boxLayout.add_widget(Widget())
-        self.add_widget(boxLayout)
+            pos = self.calculate_pos(appoint)
+            widget.pos_hint = {'top': pos}
+            relativeLayout.add_widget(widget)
+        relativeLayout.add_widget(Widget())
+        self.add_widget(relativeLayout)
 
         with self.canvas.before:
             Color(rgba=bg_color)
@@ -62,3 +67,7 @@ class DayCalendar(ButtonBehavior, BoxLayout):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
 
+    def calculate_pos(self, appoint: Appointment):
+        appoint_time = appoint.date.hour + appoint.date.minute/60
+        pos = (appoint_time - self.top_hour) / (self.bot_hour - self.top_hour)
+        return (1-pos)
