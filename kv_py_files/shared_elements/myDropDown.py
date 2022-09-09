@@ -20,7 +20,7 @@ class MyDropDown(DropDown):
     btn_color: tuple[float]
     # if attr_name is None then obj ButtonWithObject.obj is used
     # else ButtonWithObject.obj.attr_name is used
-    attr_name: str | None
+    attr_name = None
     attr_func: Callable[[object], str]
     list_objects: ListProperty = ListProperty()
 

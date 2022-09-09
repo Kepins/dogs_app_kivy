@@ -37,7 +37,7 @@ class ClickableBoxLayout(ButtonBehavior, BoxLayout):
 class MyDataTable(BoxLayout):
     is_row_selected: BooleanProperty = BooleanProperty(False)
     object_selected: ObjectProperty = ObjectProperty(None, allownone=True)
-    row_selected: ClickableBoxLayout | None = None
+    row_selected = None
     gridLayout_rows: GridLayout
     # dp() should probably be used
     height_row: float

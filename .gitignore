@@ -7,3 +7,6 @@
 # __pycache__ files
 __pycache__/
 entities/__pycache__/
+
+# pipfile.lock makes 'pipenv  install' not work on anything that is not Windows
+Pipfile.lock
