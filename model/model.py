@@ -1,6 +1,5 @@
 import datetime
-import os
-from dotenv import load_dotenv
+import secrets
 import mysql.connector
 from mysql.connector import MySQLConnection, Error
 
@@ -23,13 +22,11 @@ class Model:
     appointments: list[Appointment]
 
     def __init__(self):
-        # load environment variables from '.env' file
-        load_dotenv()
         self.db = mysql.connector.connect(
-            host=os.getenv('MYSQL_HOST'),
-            user=os.getenv('MYSQL_USER'),
-            passwd=os.getenv('MYSQL_PASSWD'),
-            database=os.getenv('MYSQL_DATABASE')
+            host=secrets.MYSQL_HOST,
+            user=secrets.MYSQL_USER,
+            passwd=secrets.MYSQL_PASSWD,
+            database=secrets.MYSQL_DATABASE
         )
         self.__load()
 

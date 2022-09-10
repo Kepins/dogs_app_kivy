@@ -4,9 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-mysql-connector-python = "*"
-python-dotenv = "*"
-kivy = "*"
+mysql-connector-python = "==8.0.30"
+kivy = "==2.1.0"
+buildozer = "==1.4.0"
 
 [dev-packages]
 

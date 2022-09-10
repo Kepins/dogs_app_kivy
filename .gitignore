@@ -1,8 +1,11 @@
 # PyCharm specific directory
 .idea/
 
-# this file contains sensitive data
+# this files contains sensitive data
+# .env is not used for now due to problems with getting it to work on Android
 .env
+secrets.py
+
 
 # __pycache__ files
 __pycache__/
@@ -10,3 +13,9 @@ entities/__pycache__/
 
 # pipfile.lock makes 'pipenv  install' not work on anything that is not Windows
 Pipfile.lock
+
+# Buildozer files
+.buildozer/
+bin/
+
+
