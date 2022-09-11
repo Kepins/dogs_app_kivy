@@ -127,7 +127,10 @@ class AddAppointScreen(Screen):
                                  hour=int(self.hour_dropdown.main_button.obj),
                                  minute=int(self.min_dropdown.main_button.obj))
         time = self.duration_dropdown.main_button.obj
-        cost = Decimal(int(self.ids['txt_input_cost'].text))
+        if self.ids['txt_input_cost'].text != '':
+            cost = Decimal(int(self.ids['txt_input_cost'].text))
+        else:
+            cost = Decimal(0)
         new_appoint = Appointment(id=None, dog=dog, service=service, date=date, time=time, cost=cost)
 
         try:
@@ -136,7 +139,6 @@ class AddAppointScreen(Screen):
             self.has_already_added = True
             self.ids['status_label'].text = 'Dodano wizytę'
         except InsertAppointmentError as err:
-            print(err.sql_error)
             self.ids['status_label'].text = err.msg
         self.ids['status_label'].change_color((191 / 255, 64 / 255, 191 / 255, 1))
 
