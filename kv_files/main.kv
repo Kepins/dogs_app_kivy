@@ -1,8 +1,7 @@
 #: import WindowManager kv_py_files.windowManager
 #: import WelcomeScreen kv_py_files.welcomeScreen
 #: import ClientsScreen kv_py_files.clientsScreen
-#: import AddClientScreen kv_py_files.addClientScreen
-#: import EditClientScreen kv_py_files.editClientScreen
+#: import AddEditClientScreen kv_py_files.addEditOwnerScreen
 #: import EditSelectClientScreen kv_py_files.editSelectClientScreen
 #: import EditSelectDogScreen kv_py_files.editSelectDogScreen
 #: import AddDogScreen kv_py_files.addDogScreen
@@ -16,9 +15,8 @@
 # KV files
 #: include kv_files/welcomeScreen.kv
 #: include kv_files/clientsScreen.kv
-#: include kv_files/addClientScreen.kv
+#: include kv_files/addEditOwnerScreen.kv
 #: include kv_files/editSelectClientScreen.kv
-#: include kv_files/editClientScreen.kv
 #: include kv_files/editSelectDogScreen.kv
 #: include kv_files/addDogScreen.kv
 #: include kv_files/editDogScreen.kv
@@ -44,13 +42,12 @@ WindowManager:
     AddAppointScreen:
     EditAppointScreen:
     ClientsScreen:
-    AddClientScreen:
-    EditSelectClientScreen
-    EditClientScreen
-    EditSelectDogScreen
-    AddDogScreen
-    EditDogScreen
-    SelectOwnerScreen
+    AddEditOwnerScreen:
+    EditSelectClientScreen:
+    EditSelectDogScreen:
+    AddDogScreen:
+    EditDogScreen:
+    SelectOwnerScreen:
 
 
 

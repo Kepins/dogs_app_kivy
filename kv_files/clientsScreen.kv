@@ -6,7 +6,9 @@
         MyButton:
             text: 'Dodaj'
             on_release:
-                app.root.current = "addClientScreen"
+                app.root.get_screen("addEditOwnerScreen").adding = True
+                app.root.get_screen("addEditOwnerScreen").prev_screen = app.root.current
+                app.root.current = "addEditOwnerScreen"
                 root.manager.transition.direction = "left"
         MyButton:
             text: 'Edytuj'

@@ -10,7 +10,7 @@ class EditSelectClientScreen(Screen):
     phone_name: str
     last_name: str
     is_row_selected = BooleanProperty(False)
-    owner_selected = ObjectProperty(None)
+    owner_selected = ObjectProperty(None, allownone=True)
     bound = False
 
     def __init__(self, **kwargs):

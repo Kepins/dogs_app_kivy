@@ -9,7 +9,7 @@ from kv_py_files.dogsApp import app
 class EditSelectDogScreen(Screen):
     owner_edited: Owner
     is_row_selected = BooleanProperty(False)
-    dog_selected = ObjectProperty(None)
+    dog_selected = ObjectProperty(None, allownone=True)
     bound = False
 
     def on_pre_enter(self, *args):

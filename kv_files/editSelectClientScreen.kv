@@ -55,8 +55,10 @@
                 disabled:
                     not root.is_row_selected
                 on_release:
-                    app.root.get_screen("editClientScreen").owner_edited = root.owner_selected
-                    app.root.current = "editClientScreen"
+                    app.root.get_screen("addEditOwnerScreen").adding = False
+                    app.root.get_screen("addEditOwnerScreen").owner_edited = root.owner_selected
+                    app.root.get_screen("addEditOwnerScreen").prev_screen = app.root.current
+                    app.root.current = "addEditOwnerScreen"
                     root.manager.transition.direction = "left"
             Button:
                 text: 'Anuluj'
