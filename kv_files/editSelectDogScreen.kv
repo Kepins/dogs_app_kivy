@@ -16,7 +16,10 @@
             Button:
                 text: 'Dodaj'
                 on_release:
-                    app.root.current = "addDogScreen"
+                    app.root.get_screen("addEditDogScreen").adding = True
+                    app.root.get_screen("addEditDogScreen").owner = root.owner_edited
+                    app.root.get_screen("addEditDogScreen").prev_screen = app.root.current
+                    app.root.current = "addEditDogScreen"
                     root.manager.transition.direction = "left"
             Button:
                 id: button_edit
@@ -24,8 +27,10 @@
                 disabled:
                     not root.is_row_selected
                 on_release:
-                    app.root.get_screen("editDogScreen").dog = root.dog_selected
-                    app.root.current = "editDogScreen"
+                    app.root.get_screen("addEditDogScreen").adding = False
+                    app.root.get_screen("addEditDogScreen").dog_edited = root.dog_selected
+                    app.root.get_screen("addEditDogScreen").prev_screen = app.root.current
+                    app.root.current = "addEditDogScreen"
                     root.manager.transition.direction = "left"
             Button:
                 text: 'Anuluj'
