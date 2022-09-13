@@ -55,17 +55,16 @@ class MyDataTable(BoxLayout):
     height_row: float
     # columns_names will be displayed in first row
     columns_names: tuple[str]
-    # attr_names will be used in getattr()
-    attr_names: tuple[str]
-    # attr_func functions that will be called on each attribute
-    attr_func: tuple[Callable[[object], str]]
+    # columns_funcs functions that will be called on object
+    # each function should return appropriate string
+    columns_funcs: tuple[Callable[[object], str]]
     # relative widths that should add up to 1
     columns_widths: tuple[float]
     bg_color: tuple[float]
     selected_color: tuple[float]
+    not_selected_color: tuple[float]
     main_row_bg_color: tuple[float]
     font_color: tuple[float]
-    not_selected_color: tuple[float]
     list_objects: ListProperty = ListProperty()
 
     def __init__(self, **kwargs):
@@ -76,12 +75,8 @@ class MyDataTable(BoxLayout):
         self.font_color = kwargs.pop('font_color')
         self.height_row = kwargs.pop('height_row')
         self.columns_names = kwargs.pop('columns_names')
-        self.attr_names = kwargs.pop('attr_names')
+        self.columns_funcs = kwargs.pop('columns_funcs')
         self.columns_widths = kwargs.pop('columns_widths')
-        if 'attr_func' in kwargs:
-            self.attr_func = kwargs.pop('attr_func')
-        else:
-            self.attr_func = tuple([self.check_none for _ in range(len(self.attr_names))])
         super().__init__(**kwargs)
         with self.canvas.before:
             Color(rgba=self.bg_color)
@@ -121,12 +116,12 @@ class MyDataTable(BoxLayout):
             row.obj = obj
             row.bind(on_press=self.row_select)
             values = []
-            for attr_name in self.attr_names:
-                values.append(self.rgetattr(obj, attr_name))
-            for value, func, width in zip(values, self.attr_func, self.columns_widths):
+            for column_func in self.columns_funcs:
+                values.append(column_func(obj))
+            for value, width in zip(values, self.columns_widths):
                 label = Label(size_hint=(width, 1))
                 label.color = self.font_color
-                label.text = func(value)
+                label.text = value
                 row.add_widget(label)
             self.gridLayout_rows.add_widget(row)
 
@@ -144,17 +139,17 @@ class MyDataTable(BoxLayout):
             if child.obj == obj:
                 self.row_select(child)
 
-    @staticmethod
-    def check_none(obj: object) -> str:
-        if obj is None:
-            return ''
-        else:
-            return str(obj)
-
-    # getattr that works on nested objects
-    # ref: https://stackoverflow.com/questions/31174295/getattr-and-setattr-on-nested-subobjects-chained-properties
-    @staticmethod
-    def rgetattr(obj, attr, *args):
-        def _getattr(obj, attr):
-            return getattr(obj, attr, *args)
-        return functools.reduce(_getattr, [obj] + attr.split('.'))
+    # @staticmethod
+    # def check_none(obj: object) -> str:
+    #     if obj is None:
+    #         return ''
+    #     else:
+    #         return str(obj)
+    #
+    # # getattr that works on nested objects
+    # # ref: https://stackoverflow.com/questions/31174295/getattr-and-setattr-on-nested-subobjects-chained-properties
+    # @staticmethod
+    # def rgetattr(obj, attr, *args):
+    #     def _getattr(obj, attr):
+    #         return getattr(obj, attr, *args)
+    #     return functools.reduce(_getattr, [obj] + attr.split('.'))
