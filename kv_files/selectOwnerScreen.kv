@@ -59,6 +59,14 @@
                     app.root.current = root.prev_screen
                     root.manager.transition.direction = "left"
             Button:
+                id: button_add
+                text: 'Dodaj'
+                on_release:
+                    app.root.get_screen("addEditOwnerScreen").adding = True
+                    app.root.get_screen("addEditOwnerScreen").prev_screen = app.root.current
+                    app.root.current = "addEditOwnerScreen"
+                    root.manager.transition.direction = "left"
+            Button:
                 text: 'Anuluj'
                 on_release:
                     app.root.current = root.prev_screen
