@@ -15,7 +15,7 @@ class AppointDataTable(MyDataTable):
                          height_row=dp(30),
                          columns_names=('godzina', 'nazwa w tel', 'rasa psa', 'koszt'),
                          columns_funcs=(self.get_time, self.get_phone_name, self.get_breed, self.get_cost),
-                         columns_widths=(5/18, 6/18, 5/18, 2/18),
+                         columns_widths=(3/18, 6/18, 7/18, 2/18),
                          **kwargs)
 
     @staticmethod

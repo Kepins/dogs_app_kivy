@@ -167,7 +167,7 @@ class AddEditAppointScreen(Screen):
                                  minute=int(self.min_dropdown.main_button.obj))
         time = self.duration_dropdown.main_button.obj
         if self.ids['txt_input_cost'].text != '':
-            cost = Decimal(float(self.ids['txt_input_cost'].text))
+            cost = Decimal(self.ids['txt_input_cost'].text + '.00')
         else:
             cost = Decimal(0)
         new_appoint = Appointment(id=None, dog=dog, service=service, date=date, time=time, cost=cost)
@@ -189,7 +189,7 @@ class AddEditAppointScreen(Screen):
                                  minute=int(self.min_dropdown.main_button.obj))
         time = self.duration_dropdown.main_button.obj
         if self.ids['txt_input_cost'].text != '':
-            cost = Decimal(float(self.ids['txt_input_cost'].text))
+            cost = Decimal(self.ids['txt_input_cost'].text + '.00')
         else:
             cost = Decimal(0)
 
