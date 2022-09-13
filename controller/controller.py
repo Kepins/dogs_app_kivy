@@ -27,6 +27,7 @@ class Controller:
 
     def get_breeds(self):
         breeds = self.model.breeds
+        breeds = sorted(breeds, key=lambda b: b.id)
         return breeds
 
     def get_sizes(self):

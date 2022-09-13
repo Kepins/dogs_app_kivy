@@ -36,6 +36,7 @@ class MyDropDown(DropDown):
 
     def bind_button(self, main_button: ButtonWithObject):
         self.main_button = main_button
+        self.main_button.color = (0, 0, 0, 1)
         self.main_button.bind(on_release=self.open)
         self.bind(on_select=lambda instance, obj: self.update_main_button(obj))
 
@@ -56,6 +57,7 @@ class MyDropDown(DropDown):
             else:
                 val = obj
             button_with_obj.text = self.attr_func(val)
+            button_with_obj.color = (0, 0, 0, 1)
             button_with_obj.size_hint = (1, None)
             button_with_obj.height = self.height_row
             button_with_obj.background_normal = ''
