@@ -154,8 +154,10 @@ class AddEditAppointScreen(Screen):
 
     def on_owner(self, instance, value: Owner):
         if value is not None:
-            self.owner_button_text = 'numer: {}, nazwa: {}, nazwisko: {}'.format(value.phone_number,
-                                                                         value.phone_name, value.last_name)
+            if value.phone_name is not None:
+                self.owner_button_text = '{}(numer: {})'.format(value.phone_name, value.phone_number)
+            else:
+                self.owner_button_text = 'numer: {}'.format(value.phone_number)
             self.ids['dogsDataTable'].list_objects = value.dogs
         else:
             self.owner_button_text = ''
