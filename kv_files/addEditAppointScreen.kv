@@ -14,20 +14,14 @@
             size_hint: 1, None
             height: self.minimum_height
             pos_hint: { "center_x": 0.5}
-            Label:
+            LineLabel:
                 text: 'data: '
-                size_hint: None, 1
-                width: '80dp'
-                color: (0,0,0,1)
             AppointButton:
                 id: button_date
                 text: root.day_button_text
                 disabled: True
-            Label:
+            LineLabel:
                 text: 'godzina: '
-                size_hint: None, 1
-                width: '80dp'
-                color: (0,0,0,1)
             BoxLayout:
                 orientation: 'horizontal'
                 AppointButton:
@@ -41,37 +35,24 @@
                 AppointButton:
                     id: button_min_dropdown
                     obj: None
-            Label:
+            LineLabel:
                 text: 'czas: '
-                size_hint: None, 1
-                width: '80dp'
-                color: (0,0,0,1)
             AppointButton:
                 id: button_duration_dropdown
                 obj: None
-            Label:
+            LineLabel:
                 text: 'usługa: '
-                size_hint: None, 1
-                width: '80dp'
-                color: (0,0,0,1)
             AppointButton:
                 id: button_service_dropdown
                 obj: None
-            Label:
+            LineLabel:
                 text: 'koszt: '
-                size_hint: None, 1
-                width: '80dp'
-                color: (0,0,0,1)
             LineTextInput:
                 id: txt_input_cost
                 input_filter: 'int'
                 halign: 'center'
-                obj: None
-            Label:
+            LineLabel:
                 text: 'właściciel: '
-                size_hint: None, 1
-                width: '80dp'
-                color: (0,0,0,1)
             AppointButton:
                 id: button_owner
                 text: root.owner_button_text

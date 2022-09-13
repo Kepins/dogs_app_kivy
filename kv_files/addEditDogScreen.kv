@@ -13,36 +13,24 @@
             size_hint: 1, None
             height: self.minimum_height
             pos_hint: { "center_x": 0.5}
-            Label:
+            LineLabel:
                 text: 'imię: '
-                size_hint: None, 1
-                width: '80dp'
-                color: (0,0,0,1)
             LineTextInput:
                 id: txt_input_name
-            Label:
+            LineLabel:
                 text: 'rasa: '
-                size_hint: None, 1
-                width: '80dp'
-                color: (0,0,0,1)
             ButtonWithObject:
                 id: button_breed_dropdown
                 background_normal: ''
                 background_color: (200/255, 200/255, 200/255, 1)
-            Label:
+            LineLabel:
                 text: 'wielkość: '
-                size_hint: None, 1
-                width: '80dp'
-                color: (0,0,0,1)
             ButtonWithObject:
                 id: button_size_dropdown
                 background_normal: ''
                 background_color: (200/255, 200/255, 200/255, 1)
-            Label:
+            LineLabel:
                 text: 'notka: '
-                size_hint: None, 1
-                width: '80dp'
-                color: (0,0,0,1)
             LineTextInput:
                 id: txt_input_note
         BoxLayout:
