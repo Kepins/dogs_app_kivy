@@ -15,7 +15,7 @@ class ClientsDataTable(MyDataTable):
                          height_row=dp(30),
                          columns_names=('telefon', 'nazwa w tel', 'imię', 'nazwisko', 'notka'),
                          columns_funcs=(self.get_phone_number, self.get_phone_name,
-                                        self.get_last_name, self.get_last_name, self.get_note),
+                                        self.get_first_name, self.get_last_name, self.get_note),
                          columns_widths=(4/24, 6/24, 4/24, 4/24, 6/24),
                          **kwargs)
 
