@@ -6,7 +6,7 @@ from entities.appointment import Appointment
 from entities.dog import Dog
 from entities.owner import Owner
 from controller.errors import InsertOwnerError, InsertDogError, EditDogError, EditOwnerError, InsertAppointmentError, \
-    EditAppointmentError
+    EditAppointmentError, RemoveAppointmentError
 from model.model import Model
 
 
@@ -80,3 +80,9 @@ class Controller:
             self.model.update_appointment(appoint)
         except Error as err:
             raise EditAppointmentError(err)
+
+    def remove_appointment(self, appoint: Appointment):
+        try:
+            self.model.delete_appointment(appoint)
+        except Error as err:
+            raise RemoveAppointmentError(err)

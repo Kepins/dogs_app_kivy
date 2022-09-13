@@ -33,7 +33,21 @@
                     app.root.current = "addEditAppointScreen"
                     root.manager.transition.direction = "left"
             Button:
+                id: button_delete
+                text: 'Usuń'
+                on_release:
+                    root.delete_button_click()
+                disabled:
+                    not root.is_row_selected
+            Button:
                 text: 'Anuluj'
                 on_release:
                     app.root.current = "calendarScreen"
                     root.manager.transition.direction = "right"
+    StatusLabel:
+        id: status_label
+        text: ''
+        size_hint: 1, None
+        height: '25dp'
+        color: (1, 1, 1, 1)
+        pos_hint: {"y": 0}

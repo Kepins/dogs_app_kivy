@@ -256,3 +256,20 @@ class Model:
 
         except Error as err:
             raise err
+
+    def delete_appointment(self, appoint: Appointment):
+        cursor = self.db.cursor()
+        query = "DELETE FROM Appointment WHERE id = %s"
+        values = [appoint.id]
+        try:
+            cursor.execute(query, values)
+            self.db.commit()
+
+            existing_appoint = next(filter(lambda a: a.id == appoint.id, self.appointments))
+            existing_appoint.dog.appointments.remove(existing_appoint)
+            existing_appoint.service.appointments.remove(existing_appoint)
+
+            self.appointments.remove(existing_appoint)
+
+        except Error as err:
+            raise err
