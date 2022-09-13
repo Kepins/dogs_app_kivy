@@ -13,14 +13,16 @@ class AppointDataTable(MyDataTable):
                          main_row_color=(190 / 255, 190 / 255, 190 / 255, 1),
                          font_color=(0, 0, 0, 1),
                          height_row=dp(30),
-                         columns_names=('godzina', 'nazwa w tel', 'nazwisko', 'rasa'),
-                         columns_funcs=(self.get_hour, self.get_phone_name, self.get_last_name, self.get_breed),
-                         columns_widths=(4/18, 5/18, 3/18, 6/18),
+                         columns_names=('godzina', 'nazwa w tel', 'rasa psa', 'koszt'),
+                         columns_funcs=(self.get_time, self.get_phone_name, self.get_breed, self.get_cost),
+                         columns_widths=(5/18, 6/18, 5/18, 2/18),
                          **kwargs)
 
     @staticmethod
-    def get_hour(appoint: Appointment):
-        return appoint.date.strftime("%H:%M")
+    def get_time(appoint: Appointment):
+        finish_time = appoint.date + appoint.time
+        text = '{} - {}'.format(appoint.date.strftime("%H:%M"), finish_time.strftime("%H:%M"))
+        return text
 
     @staticmethod
     def get_phone_name(appoint:Appointment):
@@ -33,6 +35,10 @@ class AppointDataTable(MyDataTable):
     @staticmethod
     def get_breed(appoint: Appointment):
         return AppointDataTable.filter_none(appoint.dog.breed.name)
+
+    @staticmethod
+    def get_cost(appoint: Appointment):
+        return str(appoint.cost)
 
     @staticmethod
     def filter_none(obj):
