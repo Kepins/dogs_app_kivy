@@ -64,7 +64,23 @@
         DogsDataTable:
             id: dogsDataTable
             size_hint: (1, None)
-            height: '105dp'
+            height: '135dp'
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, None
+            spacing: '15dp'
+            height: '35dp'
+            Widget:
+            Button:
+                text: 'Dodaj/Edytuj psy'
+                disabled:
+                    root.owner is None
+                on_release:
+                    root.reset = False
+                    app.root.get_screen("editSelectDogScreen").owner_edited = root.owner
+                    app.root.get_screen("editSelectDogScreen").prev_screen = app.root.current
+                    app.root.current = 'editSelectDogScreen'
+                    root.manager.transition.direction = "left"
         BoxLayout:
             orientation: 'horizontal'
             padding: 0, '20dp', 0, 0

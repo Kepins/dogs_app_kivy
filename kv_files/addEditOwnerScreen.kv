@@ -40,6 +40,7 @@
             text:
                 'Edytuj psy'
             on_release:
+                app.root.get_screen("editSelectDogScreen").prev_screen = app.root.current
                 app.root.get_screen("editSelectDogScreen").owner_edited = root.owner_edited
                 app.root.current = "editSelectDogScreen"
                 root.manager.transition.direction = "left"

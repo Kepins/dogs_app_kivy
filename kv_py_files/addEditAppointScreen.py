@@ -130,7 +130,7 @@ class AddEditAppointScreen(Screen):
         # editing appointment
         else:
             self.title_label_text = 'Edytowanie wizyty'
-            self.accept_button_text = 'Edytuj'
+            self.accept_button_text = 'Zapisz'
             if self.reset:
                 self.day = self.appoint_edited.date.date()
                 self.owner = self.appoint_edited.dog.owner
@@ -144,6 +144,17 @@ class AddEditAppointScreen(Screen):
                 self.ids['txt_input_cost'].text = '{:.0f}'.format(self.appoint_edited.cost)
         if not self.reset:
             self.reset = True
+
+            # update dogs after leaving
+            was_dog_selected = self.is_dog_selected
+            dog_selected = self.dog_selected
+            # reset dogsDataTable
+            owner = self.owner
+            self.owner = None
+            self.owner = owner
+            # update dogs after changes
+            if was_dog_selected:
+                self.ids['dogsDataTable'].obj_select(dog_selected)
         else:
             self.accept_button_disabled = False
             self.ids['status_label'].reset_to_default()

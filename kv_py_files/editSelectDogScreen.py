@@ -7,6 +7,7 @@ from kv_py_files.dogsApp import app
 
 
 class EditSelectDogScreen(Screen):
+    prev_screen: str
     owner_edited: Owner
     is_row_selected = BooleanProperty(False)
     dog_selected = ObjectProperty(None, allownone=True)
