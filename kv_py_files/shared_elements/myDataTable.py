@@ -120,6 +120,11 @@ class MyDataTable(BoxLayout):
         self.row_selected = row
         self.row_selected.change_color(self.selected_color)
 
+    def obj_select(self, obj: object):
+        for child in self.gridLayout_rows.children:
+            if child.obj == obj:
+                self.row_select(child)
+
     @staticmethod
     def check_none(obj: object) -> str:
         if obj is None:

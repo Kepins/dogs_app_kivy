@@ -1,9 +1,11 @@
-<AddAppointScreen>
-    name: "addAppointScreen"
+#: import StatusLabel kv_py_files.shared_elements.statusLabel
+
+<AddEditAppointScreen>
+    name: "addEditAppointScreen"
     DefaultLayout:
         spacing: '15dp'
         TitleLabel:
-            text: "Dodaj wizytę"
+            text: root.title_label_text
         GridLayout:
             cols: 2
             row_default_height: '35dp'
@@ -19,7 +21,7 @@
                 color: (0,0,0,1)
             AppointButton:
                 id: button_date
-                text: root.day_str
+                text: root.day_button_text
                 disabled: True
             Label:
                 text: 'godzina: '
@@ -72,8 +74,9 @@
                 color: (0,0,0,1)
             AppointButton:
                 id: button_owner
-                text: root.owner_str
+                text: root.owner_button_text
                 on_release:
+                    root.reset = False
                     app.root.get_screen("selectOwnerScreen").prev_screen = app.root.current
                     app.root.current = "selectOwnerScreen"
                     root.manager.transition.direction = "left"
@@ -88,15 +91,15 @@
             size_hint: 1, None
             height: '60dp'
             Button:
-                text: 'Dodaj'
+                text: root.accept_button_text
                 on_release:
-                    root.add_button_click()
+                    root.accept_button_click()
                 disabled:
-                    root.has_already_added or not root.is_dog_selected
+                    root.accept_button_disabled or not root.is_dog_selected
             Button:
                 text: 'Anuluj'
                 on_release:
-                    app.root.current = "editDayScreen"
+                    app.root.current = root.prev_screen
                     root.manager.transition.direction = "right"
         # this widget is used to align buttons to the top of the screen
         Widget:

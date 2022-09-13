@@ -16,8 +16,10 @@
             Button:
                 text: 'Dodaj'
                 on_release:
-                    app.root.get_screen("addAppointScreen").day = root.day
-                    app.root.current = "addAppointScreen"
+                    app.root.get_screen("addEditAppointScreen").day = root.day
+                    app.root.get_screen("addEditAppointScreen").adding = True
+                    app.root.get_screen("addEditAppointScreen").prev_screen = app.root.current
+                    app.root.current = "addEditAppointScreen"
                     root.manager.transition.direction = "left"
             Button:
                 id: button_edit
@@ -25,8 +27,10 @@
                 disabled:
                     not root.is_row_selected
                 on_release:
-                    app.root.get_screen("editAppointScreen").appoint = root.appoint_selected
-                    app.root.current = "editAppointScreen"
+                    app.root.get_screen("addEditAppointScreen").appoint_edited = root.appoint_selected
+                    app.root.get_screen("addEditAppointScreen").adding = False
+                    app.root.get_screen("addEditAppointScreen").prev_screen = app.root.current
+                    app.root.current = "addEditAppointScreen"
                     root.manager.transition.direction = "left"
             Button:
                 text: 'Anuluj'

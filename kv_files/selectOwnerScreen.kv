@@ -56,12 +56,10 @@
                     not root.is_row_selected
                 on_release:
                     app.root.get_screen(root.prev_screen).owner = root.owner_selected
-                    app.root.get_screen(root.prev_screen).reset = False
                     app.root.current = root.prev_screen
                     root.manager.transition.direction = "left"
             Button:
                 text: 'Anuluj'
                 on_release:
-                    app.root.get_screen(root.prev_screen).reset = False
                     app.root.current = root.prev_screen
                     root.manager.transition.direction = "right"
