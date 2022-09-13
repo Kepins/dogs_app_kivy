@@ -33,6 +33,18 @@ class ClickableBoxLayout(ButtonBehavior, BoxLayout):
             Color(rgba=bg_color)
             self.rect = Rectangle(size=self.size, pos=self.pos)
 
+class MainRowBoxLayout(BoxLayout):
+    def __init__(self, bg_color, **kwargs):
+        super().__init__(**kwargs)
+        with self.canvas.before:
+            Color(rgba=bg_color)
+            self.rect = Rectangle(size=self.size, pos=self.pos)
+
+        self.bind(size=self._update_rect, pos=self._update_rect)
+
+    def _update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size
 
 class MyDataTable(BoxLayout):
     is_row_selected: BooleanProperty = BooleanProperty(False)
@@ -51,6 +63,8 @@ class MyDataTable(BoxLayout):
     columns_widths: tuple[float]
     bg_color: tuple[float]
     selected_color: tuple[float]
+    main_row_bg_color: tuple[float]
+    font_color: tuple[float]
     not_selected_color: tuple[float]
     list_objects: ListProperty = ListProperty()
 
@@ -58,6 +72,8 @@ class MyDataTable(BoxLayout):
         self.bg_color = kwargs.pop('bg_color')
         self.selected_color = kwargs.pop('selected_color')
         self.not_selected_color = kwargs.pop('not_selected_color')
+        self.main_row_bg_color = kwargs.pop('main_row_color')
+        self.font_color = kwargs.pop('font_color')
         self.height_row = kwargs.pop('height_row')
         self.columns_names = kwargs.pop('columns_names')
         self.attr_names = kwargs.pop('attr_names')
@@ -72,9 +88,11 @@ class MyDataTable(BoxLayout):
             self.rect = Rectangle(size=self.size, pos=self.pos)
         self.bind(size=self._update_rect, pos=self._update_rect)
         self.orientation = 'vertical'
-        main_row = BoxLayout(orientation='horizontal', size_hint=(1, None), height=self.height_row)
+        main_row = MainRowBoxLayout(orientation='horizontal', size_hint=(1, None), height=self.height_row,
+                                    bg_color=self.main_row_bg_color)
         for column_name, column_width in zip(self.columns_names, self.columns_widths):
             label = Label(text=column_name, size_hint=(column_width, 1))
+            label.color = self.font_color
             main_row.add_widget(label)
         self.add_widget(main_row)
 
@@ -107,6 +125,7 @@ class MyDataTable(BoxLayout):
                 values.append(self.rgetattr(obj, attr_name))
             for value, func, width in zip(values, self.attr_func, self.columns_widths):
                 label = Label(size_hint=(width, 1))
+                label.color = self.font_color
                 label.text = func(value)
                 row.add_widget(label)
             self.gridLayout_rows.add_widget(row)
