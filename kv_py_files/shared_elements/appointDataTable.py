@@ -38,7 +38,7 @@ class AppointDataTable(MyDataTable):
 
     @staticmethod
     def get_cost(appoint: Appointment):
-        return str(appoint.cost)
+        return '{:.2f}'.format(appoint.cost)
 
     @staticmethod
     def filter_none(obj):

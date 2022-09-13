@@ -114,6 +114,7 @@ class AddEditAppointScreen(Screen):
     def set_widgets(self):
         # adding appointment
         if self.adding:
+            self.title_label_text = 'Dodawanie wizyty'
             self.accept_button_text = 'Dodaj'
             # should you reset all fields
             if self.reset:
@@ -128,6 +129,7 @@ class AddEditAppointScreen(Screen):
                 self.ids['txt_input_cost'].text = ''
         # editing appointment
         else:
+            self.title_label_text = 'Edytowanie wizyty'
             self.accept_button_text = 'Edytuj'
             if self.reset:
                 self.day = self.appoint_edited.date.date()
@@ -139,7 +141,7 @@ class AddEditAppointScreen(Screen):
                 self.service_dropdown.list_objects = []
                 self.service_dropdown.list_objects = app.controller.get_services()
                 self.service_dropdown.update_main_button(obj=self.appoint_edited.service)
-                self.ids['txt_input_cost'].text = str(self.appoint_edited.cost)
+                self.ids['txt_input_cost'].text = '{:.0f}'.format(self.appoint_edited.cost)
         if not self.reset:
             self.reset = True
         else:
@@ -167,7 +169,7 @@ class AddEditAppointScreen(Screen):
                                  minute=int(self.min_dropdown.main_button.obj))
         time = self.duration_dropdown.main_button.obj
         if self.ids['txt_input_cost'].text != '':
-            cost = Decimal(self.ids['txt_input_cost'].text + '.00')
+            cost = Decimal(self.ids['txt_input_cost'].text)
         else:
             cost = Decimal(0)
         new_appoint = Appointment(id=None, dog=dog, service=service, date=date, time=time, cost=cost)
@@ -189,7 +191,7 @@ class AddEditAppointScreen(Screen):
                                  minute=int(self.min_dropdown.main_button.obj))
         time = self.duration_dropdown.main_button.obj
         if self.ids['txt_input_cost'].text != '':
-            cost = Decimal(self.ids['txt_input_cost'].text + '.00')
+            cost = Decimal(self.ids['txt_input_cost'].text)
         else:
             cost = Decimal(0)
 
