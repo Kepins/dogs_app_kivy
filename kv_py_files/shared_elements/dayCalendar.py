@@ -18,7 +18,7 @@ from kv_py_files.shared_elements.appointWidget import AppointWidget
 class DayCalendar(ButtonBehavior, BoxLayout):
     day: date
     top_hour = 7
-    bot_hour = 19
+    bot_hour = 19.5
     def __init__(self, bg_color, day: date, **kwargs):
         super().__init__(**kwargs)
         self.orientation = 'vertical'

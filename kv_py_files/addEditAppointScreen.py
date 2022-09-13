@@ -31,9 +31,9 @@ class AddEditAppointScreen(Screen):
 
     # time selection
     hour_dropdown: MyDropDown
-    hours_displayed = [str(i) for i in range(7, 22)]
+    hours_displayed = [str(i) for i in range(7, 19)]
     min_dropdown: MyDropDown
-    mins_displayed = [str(i) for i in range(0, 61, 5)]
+    mins_displayed = [str(i) for i in range(0, 56, 5)]
 
     # service selection
     service_dropdown: MyDropDown
@@ -41,7 +41,7 @@ class AddEditAppointScreen(Screen):
     # time selection
     duration_dropdown: MyDropDown
     durations_displayed = [datetime.timedelta(minutes=m)
-                           for m in (15, 20, 25, 30, 40, 45, 50, 60, 70, 75, 80, 90, 105, 120)]
+                           for m in (15, 30, 35, 40, 45, 50, 55, 60, 75, 90, 105, 120)]
 
     # selectOwner
     owner = ObjectProperty(None, allownone=True)
@@ -61,21 +61,21 @@ class AddEditAppointScreen(Screen):
         super().__init__(**kwargs)
 
         # time dropdowns
-        self.hour_dropdown = MyDropDown(height_row=dp(25), btn_color=(220 / 255, 220 / 255, 220 / 255, 1),
+        self.hour_dropdown = MyDropDown(height_row=dp(28), btn_color=(210 / 255, 210 / 255, 210 / 255, 1),
                                         attr_name=None)
-        self.min_dropdown = MyDropDown(height_row=dp(25), btn_color=(220 / 255, 220 / 255, 220 / 255, 1),
+        self.min_dropdown = MyDropDown(height_row=dp(28), btn_color=(210 / 255, 210 / 255, 210 / 255, 1),
                                        attr_name=None)
 
         self.hour_dropdown.list_objects = self.hours_displayed
         self.min_dropdown.list_objects = self.mins_displayed
 
         # time dropdown
-        self.duration_dropdown = MyDropDown(height_row=dp(25), btn_color=(220 / 255, 220 / 255, 220 / 255, 1),
+        self.duration_dropdown = MyDropDown(height_row=dp(28), btn_color=(210 / 255, 210 / 255, 210 / 255, 1),
                                             attr_name=None, attr_func=self.timedelta_to_str)
         self.duration_dropdown.list_objects = self.durations_displayed
 
         # service dropdown
-        self.service_dropdown = MyDropDown(height_row=dp(25), btn_color=(220 / 255, 220 / 255, 220 / 255, 1),
+        self.service_dropdown = MyDropDown(height_row=dp(40), btn_color=(210 / 255, 210 / 255, 210 / 255, 1),
                                            attr_name='name')
 
     def on_pre_enter(self, *args):
@@ -121,7 +121,7 @@ class AddEditAppointScreen(Screen):
                 self.ids['status_label'].reset_to_default()
                 self.owner = None
                 self.hour_dropdown.update_main_button(obj='12')
-                self.min_dropdown.update_main_button(obj='00')
+                self.min_dropdown.update_main_button(obj='0')
                 self.duration_dropdown.update_main_button(obj=datetime.timedelta(minutes=45))
                 self.service_dropdown.list_objects = []
                 self.service_dropdown.list_objects = app.controller.get_services()
