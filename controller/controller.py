@@ -5,7 +5,8 @@ from mysql.connector import Error
 from entities.appointment import Appointment
 from entities.dog import Dog
 from entities.owner import Owner
-from controller.errors import InsertOwnerError, InsertDogError, EditDogError, EditOwnerError, InsertAppointmentError
+from controller.errors import InsertOwnerError, InsertDogError, EditDogError, EditOwnerError, InsertAppointmentError, \
+    EditAppointmentError
 from model.model import Model
 
 
@@ -73,3 +74,9 @@ class Controller:
             self.model.insert_appointment(appoint)
         except Error as err:
             raise InsertAppointmentError(err)
+
+    def edit_appointment(self, appoint: Appointment):
+        try:
+            self.model.update_appointment(appoint)
+        except Error as err:
+            raise EditAppointmentError(err)

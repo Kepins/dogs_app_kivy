@@ -69,3 +69,12 @@ class InsertAppointmentError(Exception):
             self.msg = 'Wizyta musi mieć wybraną usługę'
         else:
             self.msg = 'Błąd: ' + sql_error.msg
+
+
+class EditAppointmentError(Exception):
+    sql_error: MySQLError
+    msg: str
+
+    def __init__(self, sql_error: MySQLError):
+        self.sql_error = sql_error
+        self.msg = 'Błąd: ' + sql_error.msg

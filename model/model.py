@@ -228,3 +228,31 @@ class Model:
 
         except Error as err:
             raise err
+
+    def update_appointment(self, appoint: Appointment):
+        cursor = self.db.cursor()
+        query = "UPDATE Appointment " \
+                "SET date = %s, time = %s, id_dog = %s, id_service = %s, cost = %s " \
+                "WHERE id = %s"
+        values = (appoint.date, appoint.time.total_seconds()//60,
+                  appoint.dog.id, appoint.service.id, appoint.cost, appoint.id)
+        values = [self.convert_empty_string(value) for value in values]
+        try:
+            cursor.execute(query, values)
+            self.db.commit()
+
+            existing_appoint = next(filter(lambda a: a.id == appoint.id, self.appointments))
+            existing_appoint.dog.appointments.remove(existing_appoint)
+            existing_appoint.service.appointments.remove(existing_appoint)
+
+            existing_appoint.date = appoint.date
+            existing_appoint.time = appoint.time
+            existing_appoint.dog = appoint.dog
+            existing_appoint.service = appoint.service
+            existing_appoint.cost = appoint.cost
+
+            existing_appoint.dog.appointments.append(existing_appoint)
+            existing_appoint.service.appointments.append(existing_appoint)
+
+        except Error as err:
+            raise err

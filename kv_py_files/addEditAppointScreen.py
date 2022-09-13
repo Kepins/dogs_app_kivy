@@ -6,7 +6,7 @@ from kivy.properties import StringProperty, ObjectProperty, BooleanProperty
 from kivy.uix.screenmanager import Screen
 
 from controller import translations
-from controller.errors import InsertAppointmentError
+from controller.errors import InsertAppointmentError, EditAppointmentError
 from entities.appointment import Appointment
 from entities.owner import Owner
 from entities.service import Service
@@ -192,7 +192,15 @@ class AddEditAppointScreen(Screen):
             cost = Decimal(float(self.ids['txt_input_cost'].text))
         else:
             cost = Decimal(0)
-        print(Appointment(id=self.appoint_edited.id, dog=dog, service=service, date=date, time=time, cost=cost))
+
+        edited_appoint = Appointment(id=self.appoint_edited.id, dog=dog, service=service, date=date, time=time, cost=cost)
+        try:
+            self.ids['status_label'].text = 'Edytowanie...'
+            app.controller.edit_appointment(edited_appoint)
+            self.ids['status_label'].text = 'Edytowano'
+        except EditAppointmentError as err:
+            self.ids['status_label'].text = err.msg
+        self.ids['status_label'].change_color((191 / 255, 64 / 255, 191 / 255, 1))
 
     @staticmethod
     def timedelta_to_str(timedelta: datetime.timedelta):
