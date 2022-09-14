@@ -15,16 +15,16 @@ class DogsApp(App):
         super().__init__(**kwargs)
         try:
             self.controller = Controller()
-            self.kv_file = './kv_files/main.kv'
+            self.file_to_load = './kv_files/main.kv'
         except ConnectError as err:
-            self.kv_file = './kv_files/connectError.kv'
+            self.file_to_load = './kv_files/connectError.kv'
 
     def build(self):
         Config.set('graphics', 'width', '1280')
         Config.set('graphics', 'height', '720')
         Config.write()
 
-        kv = Builder.load_file(self.kv_file)
+        kv = Builder.load_file(self.file_to_load)
         return kv
 
 
