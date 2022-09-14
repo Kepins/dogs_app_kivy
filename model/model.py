@@ -149,8 +149,14 @@ class Model:
         values = [self.convert_empty_string(value) for value in values]
         try:
             cursor.execute(query, values)
-            owner.id = cursor.lastrowid
             self.db.commit()
+            owner.id = cursor.lastrowid
+            # if field was empty string it should be None
+            owner.phone_name = self.convert_empty_string(owner.phone_name)
+            owner.first_name = self.convert_empty_string(owner.first_name)
+            owner.last_name = self.convert_empty_string(owner.last_name)
+            owner.note = self.convert_empty_string(owner.note)
+
             self.owners.append(owner)
         except Error as err:
             raise err
@@ -162,8 +168,12 @@ class Model:
         values = [self.convert_empty_string(value) for value in values]
         try:
             cursor.execute(query, values)
-            dog.id = cursor.lastrowid
             self.db.commit()
+            dog.id = cursor.lastrowid
+            # if field was empty string it should be None
+            dog.name = self.convert_empty_string(dog.name)
+            dog.note = self.convert_empty_string(dog.note)
+
             self.dogs.append(dog)
             dog.owner.dogs.append(dog)
             dog.breed.dogs.append(dog)
@@ -178,8 +188,8 @@ class Model:
         values = [self.convert_empty_string(value) for value in values]
         try:
             cursor.execute(query, values)
-            appoint.id = cursor.lastrowid
             self.db.commit()
+            appoint.id = cursor.lastrowid
             self.appointments.append(appoint)
             appoint.service.appointments.append(appoint)
             appoint.dog.appointments.append(appoint)
@@ -200,10 +210,11 @@ class Model:
 
             existing_owner = next(filter(lambda o: o.id == owner.id, self.owners))
             existing_owner.phone_number = owner.phone_number
-            existing_owner.phone_name = owner.phone_name
-            existing_owner.first_name = owner.first_name
-            existing_owner.last_name = owner.last_name
-            existing_owner.note = owner.note
+            # if field was empty string it should be None
+            existing_owner.phone_name = self.convert_empty_string(owner.phone_name)
+            existing_owner.first_name = self.convert_empty_string(owner.first_name)
+            existing_owner.last_name = self.convert_empty_string(owner.last_name)
+            existing_owner.note = self.convert_empty_string(owner.note)
 
         except Error as err:
             raise err
@@ -221,11 +232,13 @@ class Model:
             existing_dog = next(filter(lambda d: d.id == dog.id, self.dogs))
             existing_dog.breed.dogs.remove(existing_dog)
             existing_dog.size.dogs.remove(existing_dog)
+            # if field was empty string it should be None
+            existing_dog.name = self.convert_empty_string(dog.name)
+            existing_dog.note = self.convert_empty_string(dog.note)
 
-            existing_dog.name = dog.name
             existing_dog.breed = dog.breed
             existing_dog.size = dog.size
-            existing_dog.note = dog.note
+
             existing_dog.breed.dogs.append(existing_dog)
             existing_dog.size.dogs.append(existing_dog)
 
