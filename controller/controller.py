@@ -6,7 +6,7 @@ from entities.appointment import Appointment
 from entities.dog import Dog
 from entities.owner import Owner
 from controller.errors import InsertOwnerError, InsertDogError, EditDogError, EditOwnerError, InsertAppointmentError, \
-    EditAppointmentError, RemoveAppointmentError
+    EditAppointmentError, RemoveAppointmentError, ConnectError
 from model.model import Model
 
 
@@ -14,7 +14,10 @@ class Controller:
     model: Model
 
     def __init__(self):
-        self.model = Model()
+        try:
+            self.model = Model()
+        except Error as err:
+            raise ConnectError(err)
 
     def get_owners(self, phone_number: str = '', phone_name: str = '', last_name: str = ''):
         owners = self.model.owners

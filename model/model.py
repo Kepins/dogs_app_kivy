@@ -22,13 +22,16 @@ class Model:
     appointments: list[Appointment]
 
     def __init__(self):
-        self.db = mysql.connector.connect(
-            host=secrets.MYSQL_HOST,
-            user=secrets.MYSQL_USER,
-            passwd=secrets.MYSQL_PASSWD,
-            database=secrets.MYSQL_DATABASE
-        )
-        self.__load()
+        try:
+            self.db = mysql.connector.connect(
+                host=secrets.MYSQL_HOST,
+                user=secrets.MYSQL_USER,
+                passwd=secrets.MYSQL_PASSWD,
+                database=secrets.MYSQL_DATABASE
+            )
+            self.__load()
+        except Error as err:
+            raise err
 
     def __load(self):
         self.__load_owners()
