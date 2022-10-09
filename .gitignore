@@ -6,6 +6,9 @@
 .env
 secrets.py
 
+# sqlite3 database file
+db_dogs.db
+
 
 # __pycache__ files
 __pycache__/

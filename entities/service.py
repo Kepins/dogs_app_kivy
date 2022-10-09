@@ -10,4 +10,3 @@ if TYPE_CHECKING:
 class Service:
     id: int
     name: str
-    appointments: list[Appointment] = field(repr=False)

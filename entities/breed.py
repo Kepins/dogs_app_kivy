@@ -10,4 +10,4 @@ if TYPE_CHECKING:
 class Breed:
     id: int
     name: str
-    dogs: list[Dog] = field(repr=False)
+

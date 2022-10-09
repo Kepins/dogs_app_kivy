@@ -10,4 +10,3 @@ if TYPE_CHECKING:
 class Size:
     id: int
     name: str
-    dogs: list[Dog] = field(repr=False)

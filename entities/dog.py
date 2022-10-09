@@ -17,4 +17,3 @@ class Dog:
     breed: Breed
     size: Size
     note: str
-    appointments: list[Appointment] = field(repr=False)

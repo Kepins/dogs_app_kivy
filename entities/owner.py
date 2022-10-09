@@ -13,4 +13,4 @@ class Owner:
     first_name: str
     last_name: str
     note: str
-    dogs: list[Dog] = field(repr=False)
+
