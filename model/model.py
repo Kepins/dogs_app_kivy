@@ -294,7 +294,7 @@ class Model:
         values = [self.convert_empty_string(value) for value in values]
 
         cursor.execute(query, values)
-        owner = self.select_owner(id=cursor.lastrowid)
+        owner = self.select_owner(id=owner.id)
         self.db.commit()
         return owner
 
@@ -305,7 +305,7 @@ class Model:
         values = [self.convert_empty_string(value) for value in values]
 
         cursor.execute(query, values)
-        dog = self.select_dog(id=cursor.lastrowid)
+        dog = self.select_dog(id=dog.id)
         self.db.commit()
         return dog
 
@@ -319,7 +319,7 @@ class Model:
         values = [self.convert_empty_string(value) for value in values]
 
         cursor.execute(query, values)
-        appoint = self.select_appointment(id=cursor.lastrowid)
+        appoint = self.select_appointment(id=appoint.id)
         self.db.commit()
         return appoint
 
