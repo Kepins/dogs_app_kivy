@@ -16,7 +16,7 @@ class EditSelectDogScreen(Screen):
     def on_pre_enter(self, *args):
         dogsDataTable = self.ids['dogsDataTable']
         dogsDataTable.list_objects = []
-        dogsDataTable.list_objects = self.owner_edited.dogs
+        dogsDataTable.list_objects = app.controller.get_dogs(owner=self.owner_edited)
         if not self.bound:
             dogsDataTable.bind(is_row_selected=self.setter('is_row_selected'))
             dogsDataTable.bind(object_selected=self.setter('dog_selected'))

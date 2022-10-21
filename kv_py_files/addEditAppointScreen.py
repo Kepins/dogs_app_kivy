@@ -6,7 +6,6 @@ from kivy.properties import StringProperty, ObjectProperty, BooleanProperty
 from kivy.uix.screenmanager import Screen
 
 from controller import translations
-from controller.errors import InsertAppointmentError, EditAppointmentError
 from entities.appointment import Appointment
 from entities.owner import Owner
 from entities.service import Service
@@ -125,7 +124,7 @@ class AddEditAppointScreen(Screen):
                 self.duration_dropdown.update_main_button(obj=datetime.timedelta(minutes=45))
                 self.service_dropdown.list_objects = []
                 self.service_dropdown.list_objects = app.controller.get_services()
-                self.service_dropdown.update_main_button(obj=Service(id=None, name="Wybierz serwis", appointments=None))
+                self.service_dropdown.update_main_button(obj=Service(id=None, name="Wybierz serwis"))
                 self.ids['txt_input_cost'].text = ''
         # editing appointment
         else:
@@ -169,7 +168,7 @@ class AddEditAppointScreen(Screen):
                 self.owner_button_text = '{}(numer: {})'.format(value.phone_name, value.phone_number)
             else:
                 self.owner_button_text = 'numer: {}'.format(value.phone_number)
-            self.ids['dogsDataTable'].list_objects = value.dogs
+            self.ids['dogsDataTable'].list_objects = app.controller.get_dogs(owner=value)
         else:
             self.owner_button_text = ''
             self.ids['dogsDataTable'].list_objects = []
@@ -187,13 +186,12 @@ class AddEditAppointScreen(Screen):
             cost = Decimal(0)
         new_appoint = Appointment(id=None, dog=dog, service=service, date=date, time=time, cost=cost)
 
-        try:
-            self.ids['status_label'].text = 'Dodawanie...'
-            app.controller.add_appointment(new_appoint)
-            self.accept_button_disabled = True
-            self.ids['status_label'].text = 'Dodano wizytę'
-        except InsertAppointmentError as err:
-            self.ids['status_label'].text = err.msg
+
+        self.ids['status_label'].text = 'Dodawanie...'
+        app.controller.add_appointment(new_appoint)
+        self.accept_button_disabled = True
+        self.ids['status_label'].text = 'Dodano wizytę'
+
         self.ids['status_label'].change_color((191 / 255, 64 / 255, 191 / 255, 1))
 
     def edit_appoint(self):
@@ -209,12 +207,11 @@ class AddEditAppointScreen(Screen):
             cost = Decimal(0)
 
         edited_appoint = Appointment(id=self.appoint_edited.id, dog=dog, service=service, date=date, time=time, cost=cost)
-        try:
-            self.ids['status_label'].text = 'Edytowanie...'
-            app.controller.edit_appointment(edited_appoint)
-            self.ids['status_label'].text = 'Edytowano'
-        except EditAppointmentError as err:
-            self.ids['status_label'].text = err.msg
+
+        self.ids['status_label'].text = 'Edytowanie...'
+        self.appoint_edited = app.controller.edit_appointment(edited_appoint)
+        self.ids['status_label'].text = 'Edytowano'
+
         self.ids['status_label'].change_color((191 / 255, 64 / 255, 191 / 255, 1))
 
     @staticmethod

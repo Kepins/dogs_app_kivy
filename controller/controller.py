@@ -26,6 +26,11 @@ class Controller:
             owners = filter(lambda o: o.last_name is not None and o.last_name.startswith(last_name), owners)
         return list(owners)
 
+    def get_dogs(self, owner: Owner) -> list[Dog]:
+        dogs = self.model.select_all_dogs()
+        dogs = filter(lambda d: d.owner.id == owner.id, dogs)
+        return list(dogs)
+
     def get_breeds(self) -> list[Breed]:
         breeds = self.model.select_all_breeds()
         breeds = sorted(breeds, key=lambda b: b.id)

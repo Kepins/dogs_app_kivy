@@ -182,6 +182,18 @@ class Model:
                     for t in tuples]
         return services
 
+    def select_all_dogs(self) -> list[Dog]:
+        cursor = self.db.cursor()
+        query = '''
+            SELECT * FROM Dog
+        '''
+        cursor.execute(query)
+        tuples = cursor.fetchall()
+        dogs = [Dog(id=t[0], name=t[1], owner=self.select_owner(id=t[2]), breed=self.select_breed(id=t[3]),
+                    size=self.select_size(id=t[4]), note=t[5])
+                for t in tuples]
+        return dogs
+
     def select_appointment(self, id: int) -> Appointment:
         cursor = self.db.cursor()
         query = '''
@@ -277,7 +289,7 @@ class Model:
     def insert_appointment(self, appoint: Appointment) -> Appointment:
         cursor = self.db.cursor()
         query = "INSERT INTO Appointment(date, time, id_dog, id_service, cost) VALUES(?, ?, ?, ?, ?)"
-        values = (appoint.date, appoint.time.total_seconds()//60, appoint.dog.id, appoint.service.id, appoint.cost)
+        values = (appoint.date.strftime('%Y-%m-%dT%H:%M:%S'), appoint.time.total_seconds()//60, appoint.dog.id, appoint.service.id, int(appoint.cost))
         values = [self.convert_empty_string(value) for value in values]
 
         cursor.execute(query, values)
@@ -314,10 +326,9 @@ class Model:
         query = "UPDATE Appointment " \
                 "SET date = ?, time = ?, id_dog = ?, id_service = ?, cost = ? " \
                 "WHERE id = ?"
-        values = (appoint.date, appoint.time.total_seconds()//60,
-                  appoint.dog.id, appoint.service.id, appoint.cost, appoint.id)
+        values = (appoint.date.strftime('%Y-%m-%dT%H:%M:%S'), appoint.time.total_seconds()//60,
+                  appoint.dog.id, appoint.service.id, int(appoint.cost), appoint.id)
         values = [self.convert_empty_string(value) for value in values]
-
         cursor.execute(query, values)
         appoint = self.select_appointment(id=appoint.id)
         self.db.commit()

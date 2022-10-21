@@ -2,7 +2,7 @@ from kivy.metrics import dp
 from kivy.properties import BooleanProperty, StringProperty
 from kivy.uix.screenmanager import Screen
 
-from controller.errors import InsertDogError, EditDogError
+
 from entities.breed import Breed
 from entities.dog import Dog
 from entities.size import Size
@@ -65,8 +65,8 @@ class AddEditDogScreen(Screen):
             self.ids['txt_input_name'].text = ''
             self.ids['txt_input_note'].text = ''
             # dropdowns default value
-            self.breeds_dropdown.update_main_button(obj=Breed(id=None, name='Wybierz rasę', dogs=[]))
-            self.sizes_dropdown.update_main_button(obj=Size(id=None, name='Wybierz wielkość', dogs=[]))
+            self.breeds_dropdown.update_main_button(obj=Breed(id=None, name='Wybierz rasę'))
+            self.sizes_dropdown.update_main_button(obj=Size(id=None, name='Wybierz wielkość'))
 
         # editing existing dog
         else:
@@ -89,16 +89,14 @@ class AddEditDogScreen(Screen):
         note = self.ids['txt_input_note'].text
         owner = self.owner
 
-        new_dog = Dog(id=None, owner=owner, name=name, breed=breed, size=size, note=note, appointments=[])
-        try:
-            self.ids['status_label'].text = 'Dodawanie...'
-            app.controller.add_dog(new_dog)
-            self.accept_button_disabled = True
-            self.ids['status_label'].text = 'Dodano psa'
-            self.dog_edited = new_dog
-            self.adding = False
-        except InsertDogError as err:
-            self.ids['status_label'].text = err.msg
+        new_dog = Dog(id=None, owner=owner, name=name, breed=breed, size=size, note=note)
+
+        self.ids['status_label'].text = 'Dodawanie...'
+        new_dog = app.controller.add_dog(new_dog)
+        self.accept_button_disabled = True
+        self.ids['status_label'].text = 'Dodano psa'
+        self.dog_edited = new_dog
+        self.adding = False
         self.ids['status_label'].change_color((191 / 255, 64 / 255, 191 / 255, 1))
 
     def edit_dog(self):
@@ -108,13 +106,10 @@ class AddEditDogScreen(Screen):
         note = self.ids['txt_input_note'].text
         owner = self.owner
 
-        edited_dog = Dog(id=self.dog_edited.id, owner=self.dog_edited.owner, name=name, breed=breed, size=size, note=note,
-                         appointments=self.dog_edited.appointments)
-        try:
-            self.ids['status_label'].text = 'Edytowanie...'
-            app.controller.edit_dog(edited_dog)
-            self.ids['status_label'].text = 'Edytowano'
-        except EditDogError as err:
-            self.ids['status_label'].text = err.msg
+        edited_dog = Dog(id=self.dog_edited.id, owner=self.dog_edited.owner, name=name, breed=breed, size=size, note=note)
+
+        self.ids['status_label'].text = 'Edytowanie...'
+        self.dog_edited = app.controller.edit_dog(edited_dog)
+        self.ids['status_label'].text = 'Edytowano'
         self.ids['status_label'].change_color((191 / 255, 64 / 255, 191 / 255, 1))
 

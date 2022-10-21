@@ -1,7 +1,7 @@
 from kivy.properties import BooleanProperty, StringProperty
 from kivy.uix.screenmanager import Screen
 
-from controller.errors import InsertOwnerError, EditOwnerError
+
 from entities.owner import Owner
 from kv_py_files.dogsApp import app
 
@@ -71,18 +71,16 @@ class AddEditOwnerScreen(Screen):
         note = self.ids['txt_input_note'].text
 
         new_owner = Owner(id=None, phone_number=phone_number, phone_name=phone_name,
-                          first_name=first_name, last_name=last_name, note=note, dogs=[])
-        try:
-            self.ids['status_label'].text = 'Dodawanie...'
-            app.controller.add_owner(new_owner)
-            self.accept_button_disabled = True
-            self.ids['status_label'].text = 'Dodano użytkownika'
-            # change mode of the screen
-            self.owner_edited = new_owner
-            self.adding = False
-            self.edit_dogs_button_disabled = False
-        except InsertOwnerError as err:
-            self.ids['status_label'].text = err.msg
+                          first_name=first_name, last_name=last_name, note=note)
+
+        self.ids['status_label'].text = 'Dodawanie...'
+        new_owner = app.controller.add_owner(new_owner)
+        self.accept_button_disabled = True
+        self.ids['status_label'].text = 'Dodano użytkownika'
+        # change mode of the screen
+        self.owner_edited = new_owner
+        self.adding = False
+        self.edit_dogs_button_disabled = False
         self.ids['status_label'].change_color((191 / 255, 64 / 255, 191 / 255, 1))
 
     def edit_owner(self):
@@ -93,11 +91,10 @@ class AddEditOwnerScreen(Screen):
         note = self.ids['txt_input_note'].text
 
         edited_owner = Owner(id=self.owner_edited.id, phone_number=phone_number, phone_name=phone_name,
-                             first_name=first_name, last_name=last_name, note=note, dogs=self.owner_edited.dogs)
-        try:
-            self.ids['status_label'].text = 'Edytowanie...'
-            app.controller.edit_owner(edited_owner)
-            self.ids['status_label'].text = 'Edytowano'
-        except EditOwnerError as err:
-            self.ids['status_label'].text = err.msg
+                             first_name=first_name, last_name=last_name, note=note)
+
+        self.ids['status_label'].text = 'Edytowanie...'
+        self.owner_edited = app.controller.edit_owner(edited_owner)
+        self.ids['status_label'].text = 'Edytowano'
+
         self.ids['status_label'].change_color((191 / 255, 64 / 255, 191 / 255, 1))
